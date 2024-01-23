@@ -1,3 +1,4 @@
+import '@unocss/reset/normalize.css';
 import './index.css';
 import 'uno.css';
 
