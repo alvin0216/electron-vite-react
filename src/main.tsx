@@ -1,4 +1,6 @@
+import './index.css';
 import 'uno.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
