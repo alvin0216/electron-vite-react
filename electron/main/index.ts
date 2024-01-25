@@ -3,6 +3,7 @@ import { release } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { update } from './update';
+import { ipcHandler } from './ipc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -60,6 +61,7 @@ async function createWindow() {
     },
   });
 
+  ipcHandler(win);
   if (url) {
     // electron-vite-vue#298
     win.loadURL(url);
