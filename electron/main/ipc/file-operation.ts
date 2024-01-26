@@ -25,12 +25,18 @@ export function fileOperation(win: BrowserWindow) {
   const watcher = chokidar.watch([
     resourceMap.smbInfo,
     resourceMap.hypothesis,
-    resourceMap.vantageBetaEnvConfig,
-    resourceMap.vantageEnvConfig,
+    resourceMap.envConfig,
+    resourceMap.betaEnvConfig,
     resourceMap.test,
   ]);
 
-  watcher.on('add', handleFileChange).on('change', handleFileChange).on('unlink', handleFileRemoved);
+  watcher
+    .on('add', handleFileChange)
+    .on('change', handleFileChange)
+    .on('unlink', handleFileRemoved)
+    .on('ready', () => {
+      console.log('🔥 Initial scan complete. Ready for changes');
+    });
 
   // update file
   ipcMain.on('on-update-file', (args, payload: { key: ResourceKey; json: object }) => {

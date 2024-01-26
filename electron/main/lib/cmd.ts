@@ -5,7 +5,7 @@ export function cmd(cmdStr: string) {
   return new Promise<string>((resolve, reject) => {
     exec(cmdStr, function (error, stdout, stderr) {
       if (stderr) {
-        console.log('cmd error: ', stderr);
+        console.log('😔 cmd error: ', stderr);
         reject(stderr);
       } else resolve(stdout);
     });
