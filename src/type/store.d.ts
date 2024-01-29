@@ -1,8 +1,8 @@
 declare interface StoreState {
   smbInfo?: object;
   hypothesis?: object;
-  envConfig?: object;
-  betaEnvConfig?: object;
+  configJson?: any;
+  betaConfigJson?: any;
 }
 
 type SetState<S extends Record<string, any>> = <K extends keyof S>(

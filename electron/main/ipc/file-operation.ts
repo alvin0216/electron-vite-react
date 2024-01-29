@@ -25,8 +25,8 @@ export function fileOperation(win: BrowserWindow) {
   const watcher = chokidar.watch([
     resourceMap.smbInfo,
     resourceMap.hypothesis,
-    resourceMap.envConfig,
-    resourceMap.betaEnvConfig,
+    resourceMap.configJson,
+    resourceMap.betaConfigJson,
     resourceMap.test,
   ]);
 

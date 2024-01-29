@@ -4,8 +4,8 @@ import { useSetState } from 'ahooks';
 const defaultState: StoreState = {
   smbInfo: undefined,
   hypothesis: undefined,
-  envConfig: undefined,
-  betaEnvConfig: undefined,
+  configJson: undefined,
+  betaConfigJson: undefined,
 };
 
 export function useInitialStore() {

@@ -1,17 +1,46 @@
-import { ProForm, ProFormRadio, ProFormSwitch } from '@ant-design/pro-components';
-import { useState } from 'react';
+import { useStore } from '@/hooks/useStore';
+import { ProForm, ProFormInstance, ProFormRadio, ProFormSwitch } from '@ant-design/pro-components';
 import ReactJson from 'react-json-view';
+import { useRef, useState } from 'react';
+import { Button } from 'antd';
+import { useUpdateEffect } from 'ahooks';
+
+interface FormFields {
+  EntryUrl: string;
+  CertPin: boolean;
+}
 
 const Configurator: React.FC = () => {
-  const [json, setJson] = useState({});
+  const formRef = useRef<ProFormInstance>();
+  const [appType, setAppType] = useState('non-beta');
+  const [{ configJson, betaConfigJson }] = useStore();
+
+  const json = appType === 'beta' ? betaConfigJson : configJson;
+
+  useUpdateEffect(() => {
+    formRef?.current?.setFieldsValue({ EntryUrl: json?.EntryUrl, CertPin: json?.CertPin });
+  }, [json]);
+
+  const onUpdateJson = (newJson: object) => {
+    console.log('%c newJson:', 'color: red', newJson);
+  };
+
+  const onValuesChange = (changedValues: any, values: FormFields) => {
+    onUpdateJson({ ...json, ...values });
+  };
 
   return (
     <div className='grid grid-cols-2 gap-4'>
-      <ProForm layout='horizontal' submitter={false}>
+      <ProForm<FormFields>
+        formRef={formRef}
+        layout='horizontal'
+        onValuesChange={onValuesChange}
+        initialValues={{ VantageType: 'beta' }}
+        submitter={false}>
         <ProFormRadio.Group
           radioType='button'
           fieldProps={{ buttonStyle: 'solid' }}
-          name='Entry'
+          name='EntryUrl'
           label='Entry'
           options={[
             { label: '4201', value: 'http://127.0.0.1:4201/' },
@@ -27,24 +56,24 @@ const Configurator: React.FC = () => {
         />
 
         <ProFormRadio.Group
-          name='vantageType'
-          label='VantageType'
-          options={[
-            { label: 'non-beta', value: 'non-beta' },
-            { label: 'beta', value: 'beta' },
-          ]}
+          label='Vantage'
+          valueEnum={{ 'non-beta': 'non-beta', beta: 'beta' }}
+          fieldProps={{
+            value: appType,
+            onChange: (e) => setAppType(e.target.value),
+          }}
         />
         <ProFormSwitch name='CertPin' label='CertPin' />
       </ProForm>
 
       <ReactJson
         name={`config.json`}
-        src={json}
+        src={json!}
         enableClipboard={false}
         displayDataTypes={false}
-        onEdit={(data) => setJson(data.updated_src)}
-        onAdd={(data) => setJson(data.updated_src)}
-        onDelete={(data) => setJson(data.updated_src)}
+        onEdit={(data) => onUpdateJson(data.updated_src)}
+        onAdd={(data) => onUpdateJson(data.updated_src)}
+        onDelete={(data) => onUpdateJson(data.updated_src)}
       />
     </div>
   );
