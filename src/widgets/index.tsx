@@ -1,17 +1,19 @@
 import { useIpcListener } from '@/hooks/useIpcListener';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
+import CommandTools from './CommandTools';
+import EnvTools from './EnvTools';
 
 const items: TabsProps['items'] = [
   {
-    key: '1',
-    label: 'Tab 1',
-    children: 'Content of Tab Pane 1',
+    key: 'envTools',
+    label: 'EnvTools',
+    children: <EnvTools />,
   },
   {
-    key: '2',
-    label: 'Tab 2',
-    children: 'Content of Tab Pane 2',
+    key: 'commandTools',
+    label: 'CommandTools',
+    children: <CommandTools />,
   },
   {
     key: '3',
@@ -23,7 +25,7 @@ const items: TabsProps['items'] = [
 const Widgets: React.FC = () => {
   useIpcListener();
 
-  return <Tabs className='main-tabs' size='large' defaultActiveKey='1' items={items} />;
+  return <Tabs className='main-tabs' size='large' items={items} />;
 };
 
 export default Widgets;
