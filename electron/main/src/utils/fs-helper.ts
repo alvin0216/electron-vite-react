@@ -10,7 +10,13 @@ export function readJson(path: string) {
 
 export function updateJson(path: string, json: object) {
   try {
-    return fs.writeJSONSync(path, json, { spaces: 2 });
+    const exits = fs.pathExistsSync(path);
+    if (!exits) fs.ensureFileSync(path);
+    const writeable = isFileWritable(path);
+
+    if (!writeable) setFileWritable(path);
+    fs.writeJSONSync(path, json, { spaces: 2 });
+    if (!writeable) setFileReadOnly(path);
   } catch (e) {
     return {};
   }
@@ -28,8 +34,7 @@ export function createFile(path: string, json: object) {
 
 function isFileWritable(filePath: string) {
   try {
-    fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
-    return true;
+    return fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
   } catch (err) {
     return false;
   }

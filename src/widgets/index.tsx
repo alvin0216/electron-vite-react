@@ -2,13 +2,13 @@ import { useIpcListener } from '@/hooks/useIpcListener';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import CommandTools from './CommandTools';
-import EnvTools from './EnvTools';
+import Configurator from './Configurator';
 
 const items: TabsProps['items'] = [
   {
-    key: 'envTools',
-    label: 'EnvTools',
-    children: <EnvTools />,
+    key: 'Configurator',
+    label: 'Configurator',
+    children: <Configurator />,
   },
   {
     key: 'commandTools',

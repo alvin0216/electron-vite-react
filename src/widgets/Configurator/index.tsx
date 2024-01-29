@@ -23,6 +23,10 @@ const Configurator: React.FC = () => {
 
   const onUpdateJson = (newJson: object) => {
     console.log('%c newJson:', 'color: red', newJson);
+    window.ipcRenderer?.send('on-update-file', {
+      key: 'configJson',
+      json: newJson,
+    });
   };
 
   const onValuesChange = (changedValues: any, values: FormFields) => {
@@ -36,7 +40,9 @@ const Configurator: React.FC = () => {
         layout='horizontal'
         onValuesChange={onValuesChange}
         initialValues={{ VantageType: 'beta' }}
-        submitter={false}>
+        submitter={{
+          render: () => <Button type='primary'>open the file</Button>,
+        }}>
         <ProFormRadio.Group
           radioType='button'
           fieldProps={{ buttonStyle: 'solid' }}
@@ -45,10 +51,10 @@ const Configurator: React.FC = () => {
           options={[
             { label: '4201', value: 'http://127.0.0.1:4201/' },
             { label: '4200', value: 'http://127.0.0.1:4200/' },
-            { label: 'QA-1', value: 'https://vantage.csw-qa.lenovo.com/v1/web/main/default/' },
-            { label: 'QA-2', value: 'https://vantage-2.csw-qa.lenovo.com/v1/web/main/default/' },
-            { label: 'DEV-1', value: 'https://vantage.csw-dev.lenovo.com/v1/web/main/default/' },
-            { label: 'DEV-2', value: 'https://vantage-2.csw-dev.lenovo.com/v1/web/main/default/' },
+            { label: 'Dev1', value: 'https://vantage.csw-dev.lenovo.com/v1/web/main/default/' },
+            { label: 'Dev2', value: 'https://vantage-2.csw-dev.lenovo.com/v1/web/main/default/' },
+            { label: 'QA1', value: 'https://vantage.csw-qa.lenovo.com/v1/web/main/default/' },
+            { label: 'QA2', value: 'https://vantage-2.csw-qa.lenovo.com/v1/web/main/default/' },
             { label: 'SIT(beta)', value: 'https://vantage-beta.csw.lenovo.com/v1/web/main/default/' },
             { label: 'STAGE', value: 'https://vantage.csw-stage.lenovo.com/v1/web/main/default/' },
             { label: 'PROD', value: 'https://vantage.csw.lenovo.com/v1/web/main/default/' },
@@ -67,7 +73,8 @@ const Configurator: React.FC = () => {
       </ProForm>
 
       <ReactJson
-        name={`config.json`}
+        name={'Data'}
+        sortKeys
         src={json!}
         enableClipboard={false}
         displayDataTypes={false}

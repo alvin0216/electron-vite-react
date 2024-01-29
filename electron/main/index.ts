@@ -3,7 +3,7 @@ import { release } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { update } from './update';
-import { ipcHandler } from './ipc';
+import { ipcHandler } from './src/root';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

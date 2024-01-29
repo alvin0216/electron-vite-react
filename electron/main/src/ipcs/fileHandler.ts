@@ -1,34 +1,37 @@
 import { BrowserWindow, ipcMain, shell } from 'electron';
 import chokidar from 'chokidar';
-import { ResourceKey, resourceMap } from '../lib/resource';
-import { createFile, readJson, updateJson } from '../lib/fs-helper';
+import { ResourceKey, resourceMap } from '../assets/resource';
+import { createFile, readJson, updateJson } from '../utils/fs-helper';
 
-export function fileOperation(win: BrowserWindow) {
-  let pMap: { [key: string]: ResourceKey } = {};
-  Object.entries(resourceMap).forEach(([key, value]) => {
-    // @ts-ignore
-    pMap[value] = key;
-  });
+const fileList = [
+  { key: 'smbInfo', filePath: resourceMap.smbInfo },
+  { key: 'hypothesis', filePath: resourceMap.hypothesis },
+  { key: 'configJson', filePath: resourceMap.configJson },
+  { key: 'betaConfigJson', filePath: resourceMap.betaConfigJson },
+];
 
+function getFileKey(filePath: string) {
+  return fileList.find((f) => f.filePath === filePath)!.key;
+}
+
+function getFilePaths() {
+  return fileList.map((f) => f.filePath);
+}
+
+export function fileHandler(win: BrowserWindow) {
   const handleFileChange = (path: string) => {
-    const key = pMap[path];
+    const key = getFileKey(path);
     const json = readJson(path);
     console.log('🚀 File Change: ', path);
     win?.webContents.send('file-change', { type: 'change', [key]: json });
   };
 
   const handleFileRemoved = (path: string) => {
-    const key = pMap[path];
+    const key = getFileKey(path);
     win?.webContents.send('file-change', { type: 'removed', key });
   };
 
-  const watcher = chokidar.watch([
-    resourceMap.smbInfo,
-    resourceMap.hypothesis,
-    resourceMap.configJson,
-    resourceMap.betaConfigJson,
-    resourceMap.test,
-  ]);
+  const watcher = chokidar.watch(getFilePaths());
 
   watcher
     .on('add', handleFileChange)
@@ -36,6 +39,9 @@ export function fileOperation(win: BrowserWindow) {
     .on('unlink', handleFileRemoved)
     .on('ready', () => {
       console.log('🔥 Initial scan complete. Ready for changes');
+
+      // ....
+      //
     });
 
   // update file
