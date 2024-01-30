@@ -2,10 +2,10 @@ import { createContext } from 'react';
 import { useSetState } from 'ahooks';
 
 const defaultState: StoreState = {
-  smbInfo: undefined,
-  hypothesis: undefined,
-  configJson: undefined,
-  betaConfigJson: undefined,
+  smbInfo: {},
+  hypothesis: { Choiceses: {} },
+  configJson: {},
+  betaConfigJson: {},
 };
 
 export function useInitialStore() {

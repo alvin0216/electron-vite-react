@@ -1,8 +1,10 @@
 import { useIpcListener } from '@/hooks/useIpcListener';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
-import CommandTools from './CommandTools';
 import EnvTools from './EnvTools';
+import SMBInfo from './SMBInfo';
+import Hypothesis from './Hypothesis';
+import PCSetting from './PCSetting';
 
 const items: TabsProps['items'] = [
   {
@@ -11,14 +13,19 @@ const items: TabsProps['items'] = [
     children: <EnvTools />,
   },
   {
-    key: 'commandTools',
-    label: 'CommandTools',
-    children: <CommandTools />,
+    key: 'PCSetting',
+    label: 'PC Setting',
+    children: <PCSetting />,
   },
   {
-    key: '3',
-    label: 'Tab 3',
-    children: 'Content of Tab Pane 3',
+    key: 'SMBInfo',
+    label: 'SMBInfo',
+    children: <SMBInfo />,
+  },
+  {
+    key: 'Hypothesis',
+    label: 'Hypothesis',
+    children: <Hypothesis />,
   },
 ];
 

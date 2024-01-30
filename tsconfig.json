@@ -17,11 +17,10 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
+      "@/*": ["src/*"],
+      "@enum/*": ["enum/*"]
+    }
   },
-  "include": ["src", "electron"],
+  "include": ["src", "electron", "enum"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

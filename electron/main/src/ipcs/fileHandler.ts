@@ -2,12 +2,13 @@ import { BrowserWindow, ipcMain, shell } from 'electron';
 import chokidar from 'chokidar';
 import { ResourceKey, resourceMap } from '../assets/resource';
 import { createFile, readJson, updateJson } from '../utils/fs-helper';
+import { FileKeyEnum, IPCEnum } from '@enum/index';
 
 const fileList = [
-  { key: 'smbInfo', filePath: resourceMap.smbInfo },
-  { key: 'hypothesis', filePath: resourceMap.hypothesis },
-  { key: 'configJson', filePath: resourceMap.configJson },
-  { key: 'betaConfigJson', filePath: resourceMap.betaConfigJson },
+  { key: FileKeyEnum.smbInfo, filePath: resourceMap.smbInfo },
+  { key: FileKeyEnum.hypothesis, filePath: resourceMap.hypothesis },
+  { key: FileKeyEnum.configJson, filePath: resourceMap.configJson },
+  { key: FileKeyEnum.betaConfigJson, filePath: resourceMap.betaConfigJson },
 ];
 
 function getFileKey(filePath: string) {
@@ -23,12 +24,12 @@ export function fileHandler(win: BrowserWindow) {
     const key = getFileKey(path);
     const json = readJson(path);
     console.log('🚀 File Change: ', path);
-    win?.webContents.send('file-change', { type: 'change', [key]: json });
+    win?.webContents.send(IPCEnum.OnFileChange, { type: 'change', [key]: json });
   };
 
   const handleFileRemoved = (path: string) => {
     const key = getFileKey(path);
-    win?.webContents.send('file-change', { type: 'removed', key });
+    win?.webContents.send(IPCEnum.OnFileChange, { type: 'removed', key });
   };
 
   const watcher = chokidar.watch(getFilePaths());
@@ -39,13 +40,12 @@ export function fileHandler(win: BrowserWindow) {
     .on('unlink', handleFileRemoved)
     .on('ready', () => {
       console.log('🔥 Initial scan complete. Ready for changes');
-
       // ....
       //
     });
 
   // update file
-  ipcMain.on('on-update-file', (args, payload: { key: ResourceKey; json: object }) => {
+  ipcMain.on(IPCEnum.UpdateFile, (args, payload: { key: ResourceKey; json: object }) => {
     const { key, json } = payload;
     const path = resourceMap[key];
     updateJson(path, json);
@@ -59,7 +59,7 @@ export function fileHandler(win: BrowserWindow) {
   });
 
   // open file
-  ipcMain.on('on-open-file', (args, key: ResourceKey) => {
+  ipcMain.on(IPCEnum.OpenFile, (args, key: ResourceKey) => {
     const path = resourceMap[key];
     shell.openPath(path);
   });

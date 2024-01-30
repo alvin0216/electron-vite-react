@@ -1,9 +1,10 @@
-import { useStore } from '@/hooks/useStore';
 import { ProForm, ProFormInstance, ProFormRadio, ProFormSelect, ProFormSwitch } from '@ant-design/pro-components';
 import ReactJson from 'react-json-view';
 import { useRef, useState } from 'react';
 import { Button } from 'antd';
 import { useUpdateEffect } from 'ahooks';
+import { FileKeyEnum } from '@enum/index';
+import { useFile } from '@/hooks/useFile';
 
 interface FormFields {
   EntryUrl: string;
@@ -13,24 +14,14 @@ interface FormFields {
 const EnvTools: React.FC = () => {
   const formRef = useRef<ProFormInstance>();
   const [appType, setAppType] = useState('non-beta');
-  const [{ configJson, betaConfigJson }] = useStore();
-
-  const json = appType === 'beta' ? betaConfigJson : configJson;
+  const { json, setJson, open } = useFile(appType === 'beta' ? FileKeyEnum.betaConfigJson : FileKeyEnum.configJson);
 
   useUpdateEffect(() => {
     formRef?.current?.setFieldsValue({ EntryUrl: json?.EntryUrl, CertPin: json?.CertPin });
   }, [json]);
 
-  const onUpdateJson = (newJson: object) => {
-    console.log('%c newJson:', 'color: red', newJson);
-    window.ipcRenderer?.send('on-update-file', {
-      key: 'configJson',
-      json: newJson,
-    });
-  };
-
   const onValuesChange = (changedValues: any, values: FormFields) => {
-    onUpdateJson({ ...json, ...values });
+    setJson({ ...json, ...values });
   };
 
   return (
@@ -41,7 +32,11 @@ const EnvTools: React.FC = () => {
         onValuesChange={onValuesChange}
         initialValues={{ VantageType: 'beta' }}
         submitter={{
-          render: () => <Button type='primary'>open the file</Button>,
+          render: () => (
+            <Button type='primary' onClick={open}>
+              open the file
+            </Button>
+          ),
         }}>
         <ProFormRadio.Group
           label='Vantage'
@@ -78,9 +73,9 @@ const EnvTools: React.FC = () => {
         src={json!}
         enableClipboard={false}
         displayDataTypes={false}
-        onEdit={(data) => onUpdateJson(data.updated_src)}
-        onAdd={(data) => onUpdateJson(data.updated_src)}
-        onDelete={(data) => onUpdateJson(data.updated_src)}
+        onEdit={(data) => setJson(data.updated_src)}
+        onAdd={(data) => setJson(data.updated_src)}
+        onDelete={(data) => setJson(data.updated_src)}
       />
     </div>
   );
