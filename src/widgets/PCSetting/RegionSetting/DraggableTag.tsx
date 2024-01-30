@@ -15,7 +15,7 @@ const DraggableTag: React.FC<DraggableTagProps> = (props) => {
   const { item, checked, onChange, displayEn, sortable } = props;
   const { listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
 
-  const commonStyle = { cursor: sortable ? 'move' : 'unset', transition: 'unset' };
+  const commonStyle = { cursor: sortable ? 'move' : 'pointer', transition: 'unset' };
 
   const style = transform
     ? {
