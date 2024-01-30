@@ -1,24 +1,32 @@
 import { AutoComplete, Button, Space, Tag, Tooltip } from 'antd';
 import { DragOutlined, SortAscendingOutlined, RedoOutlined } from '@ant-design/icons';
+import { useBoolean, useLocalStorageState, useToggle } from 'ahooks';
+import RegionList from './RegionList';
+import { StorgeEnum } from '@enum/storage';
 
 interface RegionSettingProps {}
 
 const RegionSetting: React.FC<RegionSettingProps> = (props) => {
+  const [sortable, { toggle: toggleSortable }] = useBoolean(false);
+
+  const [display, setDisplay] = useLocalStorageState(StorgeEnum.RegionDisplay, {
+    defaultValue: 'en',
+  });
+
+  const displayEn = display === 'en';
+  const toggleDisplay = () => setDisplay(displayEn ? 'cn' : 'en');
+
   return (
     <>
-      <div className='mb-4'>
+      <div className='mb-6'>
         <Space>
-          <Tooltip title='Free sorting by drag'>
-            <Button
-              icon={<DragOutlined />}
-              // type={sortable ? 'primary' : 'dashed'}
-              // onClick={() => setSortable((prev) => !prev)}
-            />
+          <Tooltip title={sortable ? 'Stop sorting' : 'Start sorting'}>
+            <Button icon={<DragOutlined />} type={sortable ? 'primary' : 'dashed'} onClick={toggleSortable} />
           </Tooltip>
-          <Tooltip title='按字母排序'>
-            <Button icon={<SortAscendingOutlined />} />
+
+          <Tooltip title={displayEn ? 'English' : '中文（简体）'}>
+            <Button icon={displayEn ? 'EN' : '中'} onClick={toggleDisplay} />
           </Tooltip>
-          <Tooltip title='切换中文显示'>{/* <Button icon={<TranslateIcon />} /> */}</Tooltip>
 
           <Tooltip title='Refresh your computer info'>
             <Button icon={<RedoOutlined />} />
@@ -27,6 +35,7 @@ const RegionSetting: React.FC<RegionSettingProps> = (props) => {
           <AutoComplete allowClear placeholder='Enter country name or abbreviation to filter' className='w-200' />
         </Space>
       </div>
+      <RegionList sortable={sortable} displayEn={displayEn} />
     </>
   );
 };
