@@ -1,5 +1,5 @@
 import { useStore } from '@/hooks/useStore';
-import { ProForm, ProFormInstance, ProFormRadio, ProFormSwitch } from '@ant-design/pro-components';
+import { ProForm, ProFormInstance, ProFormRadio, ProFormSelect, ProFormSwitch } from '@ant-design/pro-components';
 import ReactJson from 'react-json-view';
 import { useRef, useState } from 'react';
 import { Button } from 'antd';
@@ -10,7 +10,7 @@ interface FormFields {
   CertPin: boolean;
 }
 
-const Configurator: React.FC = () => {
+const EnvTools: React.FC = () => {
   const formRef = useRef<ProFormInstance>();
   const [appType, setAppType] = useState('non-beta');
   const [{ configJson, betaConfigJson }] = useStore();
@@ -44,24 +44,6 @@ const Configurator: React.FC = () => {
           render: () => <Button type='primary'>open the file</Button>,
         }}>
         <ProFormRadio.Group
-          radioType='button'
-          fieldProps={{ buttonStyle: 'solid' }}
-          name='EntryUrl'
-          label='Entry'
-          options={[
-            { label: '4201', value: 'http://127.0.0.1:4201/' },
-            { label: '4200', value: 'http://127.0.0.1:4200/' },
-            { label: 'Dev1', value: 'https://vantage.csw-dev.lenovo.com/v1/web/main/default/' },
-            { label: 'Dev2', value: 'https://vantage-2.csw-dev.lenovo.com/v1/web/main/default/' },
-            { label: 'QA1', value: 'https://vantage.csw-qa.lenovo.com/v1/web/main/default/' },
-            { label: 'QA2', value: 'https://vantage-2.csw-qa.lenovo.com/v1/web/main/default/' },
-            { label: 'SIT(beta)', value: 'https://vantage-beta.csw.lenovo.com/v1/web/main/default/' },
-            { label: 'STAGE', value: 'https://vantage.csw-stage.lenovo.com/v1/web/main/default/' },
-            { label: 'PROD', value: 'https://vantage.csw.lenovo.com/v1/web/main/default/' },
-          ]}
-        />
-
-        <ProFormRadio.Group
           label='Vantage'
           valueEnum={{ 'non-beta': 'non-beta', beta: 'beta' }}
           fieldProps={{
@@ -70,10 +52,28 @@ const Configurator: React.FC = () => {
           }}
         />
         <ProFormSwitch name='CertPin' label='CertPin' />
+
+        <ProFormSelect
+          wrapperCol={{ span: 6 }}
+          name='EntryUrl'
+          label='Entry'
+          allowClear={false}
+          valueEnum={{
+            'http://127.0.0.1:4201/': '4201',
+            'http://127.0.0.1:4200/': '4200',
+            'https://vantage.csw-dev.lenovo.com/v1/web/main/default/': 'Dev1',
+            'https://vantage-2.csw-dev.lenovo.com/v1/web/main/default/': 'Dev2',
+            'https://vantage.csw-qa.lenovo.com/v1/web/main/default/': 'QA1',
+            'https://vantage-2.csw-qa.lenovo.com/v1/web/main/default/': 'QA2',
+            'https://vantage-beta.csw.lenovo.com/v1/web/main/default/': 'SIT(beta)',
+            'https://vantage.csw-stage.lenovo.com/v1/web/main/default/': 'STAGE',
+            'https://vantage.csw.lenovo.com/v1/web/main/default/': 'PROD',
+          }}
+        />
       </ProForm>
 
       <ReactJson
-        name={'Data'}
+        name='config.json'
         sortKeys
         src={json!}
         enableClipboard={false}
@@ -86,4 +86,4 @@ const Configurator: React.FC = () => {
   );
 };
 
-export default Configurator;
+export default EnvTools;

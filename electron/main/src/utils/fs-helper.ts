@@ -15,9 +15,10 @@ export function updateJson(path: string, json: object) {
     const writeable = isFileWritable(path);
 
     if (!writeable) setFileWritable(path);
-    fs.writeJSONSync(path, json, { spaces: 2 });
-    if (!writeable) setFileReadOnly(path);
+    // fs.writeJSONSync(path, json, { spaces: 2 });
+    // if (!writeable) setFileReadOnly(path);
   } catch (e) {
+    console.log('updateJson error', e);
     return {};
   }
 }
