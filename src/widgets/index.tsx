@@ -13,11 +13,6 @@ const items: TabsProps['items'] = [
     children: <EnvTools />,
   },
   {
-    key: 'PCSetting',
-    label: 'PC Setting',
-    children: <PCSetting />,
-  },
-  {
     key: 'SMBInfo',
     label: 'SMBInfo',
     children: <SMBInfo />,
@@ -26,6 +21,11 @@ const items: TabsProps['items'] = [
     key: 'Hypothesis',
     label: 'Hypothesis',
     children: <Hypothesis />,
+  },
+  {
+    key: 'PCSetting',
+    label: 'PC Setting',
+    children: <PCSetting />,
   },
 ];
 

@@ -12,7 +12,7 @@ interface RegionListProps {
 
 const RegionList: React.FC<RegionListProps> = ({ sortable, displayEn }) => {
   const [countryId, setCountryId] = useState('+244');
-  const [items, setItems] = useState<RegionItem[]>(contryCodeList);
+  const [items, setItems] = useState<RegionItem[]>(contryCodeList); // TODO
 
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -29,6 +29,12 @@ const RegionList: React.FC<RegionListProps> = ({ sortable, displayEn }) => {
     }
   };
 
+  const handleChecked = (checkId: string) => {
+    if (countryId !== checkId) {
+      setCountryId(checkId);
+    }
+  };
+
   return (
     <div>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
@@ -40,9 +46,7 @@ const RegionList: React.FC<RegionListProps> = ({ sortable, displayEn }) => {
               item={item}
               key={item.id}
               checked={countryId === item.id}
-              onChange={(checked) => {
-                if (!checked) setCountryId(item.id);
-              }}
+              onChange={() => handleChecked(item.id)}
             />
           ))}
         </SortableContext>

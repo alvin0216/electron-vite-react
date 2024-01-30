@@ -25,8 +25,9 @@ const DraggableTag: React.FC<DraggableTagProps> = (props) => {
       }
     : commonStyle;
 
+  const _listeners = sortable ? listeners : {};
   return (
-    <CheckableTag checked={checked} onChange={onChange} style={style} ref={setNodeRef} {...listeners}>
+    <CheckableTag checked={checked} onChange={onChange} style={style} ref={setNodeRef} {..._listeners}>
       {displayEn ? item.en : item.cn}
     </CheckableTag>
   );
