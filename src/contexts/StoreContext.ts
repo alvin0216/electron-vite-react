@@ -1,11 +1,16 @@
 import { createContext } from 'react';
 import { useSetState } from 'ahooks';
+import { randomJson } from './random';
 
 const defaultState: StoreState = {
-  smbInfo: {},
+  smbInfo: randomJson,
   hypothesis: { Choiceses: {} },
   configJson: {},
   betaConfigJson: {},
+  service: {
+    bootingDot: false,
+    status: 'default',
+  },
 };
 
 export function useInitialStore() {

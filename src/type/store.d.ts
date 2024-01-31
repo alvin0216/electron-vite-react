@@ -3,6 +3,10 @@ declare interface StoreState {
   hypothesis: object;
   configJson: any;
   betaConfigJson: any;
+  service: {
+    bootingDot: boolean;
+    status: ServiceAction | 'default';
+  };
 }
 
 type SetState<S extends Record<string, any>> = <K extends keyof S>(
@@ -10,3 +14,5 @@ type SetState<S extends Record<string, any>> = <K extends keyof S>(
 ) => void;
 
 type StoreCTX = [StoreState, SetState<StoreState>];
+
+type ServiceAction = 'start' | 'stop' | 'reboot';

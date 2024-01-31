@@ -2,6 +2,9 @@ export enum IPCEnum {
   UpdateFile = 'UpdateFile',
   OpenFile = 'OpenFile',
   OnFileChange = 'OnFileChange',
+
+  // invoke
+  ChangeServiceStatus = 'ChangeServiceStatus',
 }
 
 // ....
