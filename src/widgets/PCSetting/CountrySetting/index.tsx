@@ -18,7 +18,7 @@ const CountrySetting: React.FC = () => {
     <>
       <div className='mb-6'>
         <Space>
-          <Tooltip title={sortable ? 'Stop sorting' : 'Start sorting'}>
+          <Tooltip title={sortable ? 'Sortable' : 'Not Sortable'}>
             <Button icon={<DragOutlined />} type={sortable ? 'primary' : 'dashed'} onClick={toggleSortable} />
           </Tooltip>
 
