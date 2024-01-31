@@ -3,7 +3,7 @@ import { Tag } from 'antd';
 
 type DraggableTagProps = {
   sortable: boolean;
-  displayEn: boolean;
+  showEn: boolean;
   item: RegionItem;
   checked: boolean;
   onChange?(checked: boolean): void;
@@ -12,7 +12,7 @@ type DraggableTagProps = {
 const { CheckableTag } = Tag;
 
 const DraggableTag: React.FC<DraggableTagProps> = (props) => {
-  const { item, checked, onChange, displayEn, sortable } = props;
+  const { item, checked, onChange, showEn, sortable } = props;
   const { listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
 
   const commonStyle = { cursor: sortable ? 'move' : 'pointer', transition: 'unset' };
@@ -28,7 +28,7 @@ const DraggableTag: React.FC<DraggableTagProps> = (props) => {
   const _listeners = sortable ? listeners : {};
   return (
     <CheckableTag checked={checked} onChange={onChange} style={style} ref={setNodeRef} {..._listeners}>
-      {displayEn ? item.en : item.cn}
+      {showEn ? item.en : item.cn}
     </CheckableTag>
   );
 };

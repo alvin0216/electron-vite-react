@@ -3,14 +3,14 @@ import type { DragEndEvent } from '@dnd-kit/core/dist/types/index';
 import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import contryCodeList from './contry-code.json';
 import { useState } from 'react';
-import DraggableTag from '@/widgets/PCSetting/RegionSetting/DraggableTag';
+import DraggableTag from '@/widgets/PCSetting/CountrySetting/DraggableTag';
 
-interface RegionListProps {
+interface CountriesProps {
   sortable: boolean;
-  displayEn: boolean;
+  showEn: boolean;
 }
 
-const RegionList: React.FC<RegionListProps> = ({ sortable, displayEn }) => {
+const Countries: React.FC<CountriesProps> = ({ sortable, showEn }) => {
   const [countryId, setCountryId] = useState('+244');
   const [items, setItems] = useState<RegionItem[]>(contryCodeList); // TODO
 
@@ -42,7 +42,7 @@ const RegionList: React.FC<RegionListProps> = ({ sortable, displayEn }) => {
           {items.map((item) => (
             <DraggableTag
               sortable={sortable}
-              displayEn={displayEn}
+              showEn={showEn}
               item={item}
               key={item.id}
               checked={countryId === item.id}
@@ -55,4 +55,4 @@ const RegionList: React.FC<RegionListProps> = ({ sortable, displayEn }) => {
   );
 };
 
-export default RegionList;
+export default Countries;

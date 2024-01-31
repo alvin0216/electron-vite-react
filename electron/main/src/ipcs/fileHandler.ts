@@ -2,7 +2,7 @@ import { BrowserWindow, ipcMain, shell } from 'electron';
 import chokidar from 'chokidar';
 import { ResourceKey, resourceMap } from '../assets/resource';
 import { createFile, readJson, updateJson } from '../utils/fs-helper';
-import { FileKeyEnum, IPCEnum } from '@enum/index';
+import { FileKeyEnum, IPCEnum } from '@constants/enum';
 
 const fileList = [
   { key: FileKeyEnum.smbInfo, filePath: resourceMap.smbInfo },

@@ -19,7 +19,7 @@ export default defineConfig(({ command }) => {
     resolve: {
       alias: {
         '@': path.join(__dirname, 'src'),
-        '@enum': path.join(__dirname, 'enum'),
+        '@constants': path.join(__dirname, 'constants'),
       },
     },
     plugins: [

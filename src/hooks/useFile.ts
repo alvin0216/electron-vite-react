@@ -1,4 +1,4 @@
-import { FileKeyEnum, IPCEnum } from '@enum/index';
+import { FileKeyEnum, IPCEnum } from '@constants/enum';
 import { useIpc } from './useIpc';
 import { useStore } from './useStore';
 

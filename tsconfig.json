@@ -18,9 +18,9 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
-      "@enum/*": ["enum/*"]
+      "@constants/*": ["constants/*"]
     }
   },
-  "include": ["src", "electron", "enum"],
+  "include": ["src", "electron", "constants"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

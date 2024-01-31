@@ -1,7 +1,7 @@
 import ServiceController from '@/components/ServiceController';
 import { useFile } from '@/hooks/useFile';
 import { ProFormInstance, ProFormSelect } from '@ant-design/pro-components';
-import { FileKeyEnum } from '@enum/index';
+import { FileKeyEnum } from '@constants/enum';
 import { Alert, Badge, Button, Select, Space, Switch, Typography } from 'antd';
 import { useMemo, useRef, useState } from 'react';
 import ReactJson from 'react-json-view';

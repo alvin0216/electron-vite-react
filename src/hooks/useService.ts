@@ -1,6 +1,6 @@
 import { useStore } from './useStore';
 import { useIpc } from './useIpc';
-import { IPCEnum } from '@enum/index';
+import { IPCEnum } from '@constants/enum';
 
 export function useService(action: ServiceAction) {
   const [{ service }, setStore] = useStore();

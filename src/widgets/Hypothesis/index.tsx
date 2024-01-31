@@ -1,6 +1,6 @@
 import { useFile } from '@/hooks/useFile';
 import { ProFormInstance } from '@ant-design/pro-components';
-import { FileKeyEnum } from '@enum/index';
+import { FileKeyEnum } from '@constants/enum';
 import { useRef } from 'react';
 import ReactJson from 'react-json-view';
 

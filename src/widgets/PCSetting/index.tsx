@@ -1,5 +1,5 @@
 import { ProForm, ProFormRadio } from '@ant-design/pro-components';
-import RegionSetting from './RegionSetting';
+import CountrySetting from './CountrySetting';
 
 const PCSetting: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const PCSetting: React.FC = () => {
           ]}
         />
         <ProForm.Item label='Region'>
-          <RegionSetting />
+          <CountrySetting />
         </ProForm.Item>
       </ProForm>
     </>

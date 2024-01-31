@@ -3,7 +3,7 @@ import ReactJson from 'react-json-view';
 import { useRef, useState } from 'react';
 import { Button } from 'antd';
 import { useUpdateEffect } from 'ahooks';
-import { FileKeyEnum } from '@enum/index';
+import { FileKeyEnum } from '@constants/enum';
 import { useFile } from '@/hooks/useFile';
 
 interface FormFields {
