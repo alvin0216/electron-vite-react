@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import { useUpdateEffect } from 'ahooks';
 import { FileKeyEnum } from '@constants/enum';
 import { useFile } from '@/hooks/useFile';
+import JsonView from '@/components/JsonView';
 
 interface FormFields {
   EntryUrl: string;
@@ -31,13 +32,7 @@ const EnvTools: React.FC = () => {
         layout='horizontal'
         onValuesChange={onValuesChange}
         initialValues={{ VantageType: 'beta' }}
-        submitter={{
-          render: () => (
-            <Button type='primary' onClick={open}>
-              open the file
-            </Button>
-          ),
-        }}>
+        submitter={false}>
         <ProFormRadio.Group
           label='Vantage'
           valueEnum={{ 'non-beta': 'non-beta', beta: 'beta' }}
@@ -67,16 +62,7 @@ const EnvTools: React.FC = () => {
         />
       </ProForm>
 
-      <ReactJson
-        name='config.json'
-        sortKeys
-        src={json!}
-        enableClipboard={false}
-        displayDataTypes={false}
-        onEdit={(data) => setJson(data.updated_src)}
-        onAdd={(data) => setJson(data.updated_src)}
-        onDelete={(data) => setJson(data.updated_src)}
-      />
+      <JsonView title='config.json' json={json} setJson={setJson} open={open} />
     </div>
   );
 };

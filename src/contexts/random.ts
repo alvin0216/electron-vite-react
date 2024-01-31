@@ -1,6 +1,6 @@
 export const randomJson = {
   'Ronald Lee': 'true',
-  'Elizabeth Thomas': 'x',
+  'Elizabeth Thomas': 'true',
   'Brian Lee': 'x',
   'Nancy Lewis': 'x',
   'Paul Allen': 'x',
@@ -63,8 +63,8 @@ export const randomJson = {
   'Deborah Lopez': 'x',
   'Christopher Young': 'x',
   'Deborah Hall': 'x',
-  'Amy Martin': 'x',
-  'Laura Lopez': 'x',
+  'Amy Martin': 'true',
+  'Laura Lopez': 'false',
   'Ruth Walker': 'x',
   'Mark Moore': 'x',
   'David Lopez': 'x',
