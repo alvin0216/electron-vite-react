@@ -1,9 +1,8 @@
 import { createContext } from 'react';
 import { useSetState } from 'ahooks';
-import { randomJson } from './random';
 
 const defaultState: StoreState = {
-  smbInfo: randomJson,
+  smbInfo: {},
   hypothesis: { Choiceses: {} },
   configJson: {},
   betaConfigJson: {},

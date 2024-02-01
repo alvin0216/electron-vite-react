@@ -14,7 +14,7 @@ const PCSetting: React.FC = () => {
             { label: 'Gaming', value: 'Gaming' },
           ]}
         />
-        <ProForm.Item label='Region'>
+        <ProForm.Item label='Country'>
           <CountrySetting />
         </ProForm.Item>
       </ProForm>
