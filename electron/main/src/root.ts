@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron';
-import { fileHandler } from './ipcs/fileHandler';
+import { ipcWatchFiles } from './file-watch';
 
 export function ipcHandler(win: BrowserWindow) {
-  fileHandler(win);
+  ipcWatchFiles(win);
 }

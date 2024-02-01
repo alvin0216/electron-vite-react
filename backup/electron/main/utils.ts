@@ -1,9 +1,9 @@
-import { dialog, shell } from "electron";
-import { EMCEnum } from "../../universal/enum";
+import { dialog, shell } from 'electron';
+import { EMCEnum } from '../../universal/enum';
 
-const fs = require("fs-extra");
-const path = require("path");
-const exec = require("child_process").exec;
+const fs = require('fs-extra');
+const path = require('path');
+const exec = require('child_process').exec;
 
 export function readOrCreateJson(filePath: string, create = true, json = {}) {
   const exits = fs.pathExistsSync(filePath);
@@ -30,11 +30,11 @@ export function updateJsonFile(filePath, data) {
   } catch (err) {
     if (err.errno === -4048) {
       dialog.showErrorBox(
-        "Operation not permitted",
-        "please open the file path, then update the permissions to allow Modify"
+        'Operation not permitted',
+        'please open the file path, then update the permissions to allow Modify'
       );
     } else {
-      dialog.showErrorBox("Operation Exception", err.message);
+      dialog.showErrorBox('Operation Exception', err.message);
     }
     return false;
   }
@@ -64,17 +64,10 @@ export function MergeRecursive(origin, target) {
   }
 }
 
-type TraversingFilesCallback = (
-  path: string,
-  file: File,
-  done: () => void
-) => void;
+type TraversingFilesCallback = (path: string, file: File, done: () => void) => void;
 
 // 遍历目录下的所有文件
-export function traversingFiles(
-  currentDirPath: string,
-  callback: TraversingFilesCallback
-) {
+export function traversingFiles(currentDirPath: string, callback: TraversingFilesCallback) {
   let isBreak = false;
   function recv(currentDirPath) {
     const list = fs.readdirSync(currentDirPath, { withFileTypes: true });
@@ -86,10 +79,7 @@ export function traversingFiles(
           isBreak = true;
         });
         if (isBreak) break;
-      } else if (
-        dirent.isDirectory() &&
-        !/node_modules|vscode|dist|git/.test(currentDirPath)
-      ) {
+      } else if (dirent.isDirectory() && !/node_modules|vscode|dist|git/.test(currentDirPath)) {
         recv(filePath);
       }
     }
@@ -100,7 +90,7 @@ export function traversingFiles(
 
 export async function selectFolder(args, params) {
   const { canceled, filePaths } = await dialog.showOpenDialog({
-    properties: params?.properties || ["openDirectory"],
+    properties: params?.properties || ['openDirectory'],
   });
   if (canceled) {
     return;
@@ -123,24 +113,19 @@ export function cmd(cmdStr: string) {
   });
 }
 
-export function findPackageJsonPath(
-  projectPath: string,
-  relativePos: boolean = true
-) {
-  let packageJsonFilePath = "";
+export function findPackageJsonPath(projectPath: string, relativePos: boolean = true) {
+  let packageJsonFilePath = '';
   traversingFiles(projectPath, (filePath, file, done) => {
-    if (file.name === "package.json") {
+    if (file.name === 'package.json') {
       packageJsonFilePath = filePath;
       done();
     }
   });
 
   if (relativePos) {
-    let rpath = packageJsonFilePath
-      .replace(projectPath, "")
-      .replace(/\\/g, "/");
+    let rpath = packageJsonFilePath.replace(projectPath, '').replace(/\\/g, '/');
 
-    if (rpath.indexOf("/") === 0) rpath = rpath.slice(1);
+    if (rpath.indexOf('/') === 0) rpath = rpath.slice(1);
 
     return rpath;
   }
@@ -149,5 +134,5 @@ export function findPackageJsonPath(
 }
 
 export function readFile(args, filePath) {
-  return fs.readFileSync(filePath, "utf8");
+  return fs.readFileSync(filePath, 'utf8');
 }

@@ -12,11 +12,7 @@ export function updateJson(path: string, json: object) {
   try {
     const exits = fs.pathExistsSync(path);
     if (!exits) fs.ensureFileSync(path);
-    const writeable = isFileWritable(path);
-
-    if (!writeable) setFileWritable(path);
-    // fs.writeJSONSync(path, json, { spaces: 2 });
-    // if (!writeable) setFileReadOnly(path);
+    return fs.writeJSONSync(path, json, { spaces: 2 });
   } catch (e) {
     console.log('updateJson error', e);
     return {};
@@ -33,18 +29,21 @@ export function createFile(path: string, json: object) {
   }
 }
 
-function isFileWritable(filePath: string) {
+export function isFileWritable(filePath: string) {
   try {
-    return fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
+    fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
+    return true;
   } catch (err) {
     return false;
   }
 }
 
-function setFileWritable(path: string) {
+export function setFileWritable(path: string) {
   fs.chmodSync(path, '666');
 }
 
-function setFileReadOnly(path: string) {
+export function setFileReadOnly(path: string) {
   fs.chmodSync(path, '444');
 }
+
+export const existsSync = fs.existsSync;

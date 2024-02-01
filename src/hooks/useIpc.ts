@@ -1,6 +1,6 @@
 export function useIpc() {
   return {
-    send: window.ipcRenderer?.send,
+    send: window.ipcRenderer?.send || (() => {}),
     invoke: window.ipcRenderer?.invoke,
   };
 }

@@ -4,7 +4,7 @@ import { useFile } from '@/hooks/useFile';
 import { FileKeyEnum } from '@constants/enum';
 
 const SMBInfo: React.FC = () => {
-  const { json, setJson, open } = useFile(FileKeyEnum.smbInfo);
+  const { json, setJson, open } = useFile(FileKeyEnum.SMBInfo);
 
   return (
     <div className='grid grid-cols-2 gap-4'>
