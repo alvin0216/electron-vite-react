@@ -1,7 +1,7 @@
 import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core/dist/types/index';
 import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
-import contryCodeList from './contry-code.json';
+import countries from '@constants/countries.json';
 import { useState } from 'react';
 import DraggableTag from '@/widgets/PCSetting/CountrySetting/DraggableTag';
 
@@ -12,7 +12,7 @@ interface CountriesProps {
 
 const Countries: React.FC<CountriesProps> = ({ sortable, showEn }) => {
   const [countryId, setCountryId] = useState('+244');
-  const [items, setItems] = useState<RegionItem[]>(contryCodeList); // TODO
+  const [items, setItems] = useState<CountryItem[]>(countries); // TODO
 
   const sensors = useSensors(useSensor(PointerSensor));
 

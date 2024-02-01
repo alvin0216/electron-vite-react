@@ -4,7 +4,7 @@ import { Tag } from 'antd';
 type DraggableTagProps = {
   sortable: boolean;
   showEn: boolean;
-  item: RegionItem;
+  item: CountryItem;
   checked: boolean;
   onChange?(checked: boolean): void;
 };

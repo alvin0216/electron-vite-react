@@ -1,4 +1,4 @@
-declare interface RegionItem {
+declare interface CountryItem {
   en: string;
   cn: string;
   id: string;
