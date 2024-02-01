@@ -1,8 +1,8 @@
 declare interface StoreState {
-  smbInfo: object;
-  hypothesis: object;
-  configJson: any;
-  betaConfigJson: any;
+  smbInfo: FileItem;
+  hypothesis: FileItem;
+  configJson: FileItem;
+  betaConfigJson: FileItem;
   service: {
     bootingDot: boolean;
     status: ServiceAction | 'default';
@@ -16,3 +16,8 @@ type SetState<S extends Record<string, any>> = <K extends keyof S>(
 type StoreCTX = [StoreState, SetState<StoreState>];
 
 type ServiceAction = 'start' | 'stop' | 'reboot';
+
+interface FileItem {
+  value: object;
+  status: 'writeable' | 'readonly' | 'not found';
+}

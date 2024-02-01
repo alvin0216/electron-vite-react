@@ -1,11 +1,12 @@
 import { createContext } from 'react';
 import { useSetState } from 'ahooks';
+import { FileStatus } from '@constants/enum';
 
 const defaultState: StoreState = {
-  smbInfo: {},
-  hypothesis: { Choiceses: {} },
-  configJson: {},
-  betaConfigJson: {},
+  smbInfo: { value: {}, status: FileStatus.Writeable },
+  hypothesis: { value: {}, status: FileStatus.Writeable },
+  configJson: { value: {}, status: FileStatus.Writeable },
+  betaConfigJson: { value: {}, status: FileStatus.Writeable },
   service: {
     bootingDot: false,
     status: 'default',

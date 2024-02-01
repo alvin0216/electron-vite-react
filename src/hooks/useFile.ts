@@ -3,13 +3,19 @@ import { useIpc } from './useIpc';
 import { useStore } from './useStore';
 
 export function useFile(fileKey: FileKeyEnum) {
-  const [state, setState] = useStore();
+  const [state] = useStore();
   const { send } = useIpc();
 
   const setJson = (newJson: object) => {
-    // send(IPCEnum.UpdateFile, { key: fileKey, json: newJson });
-    setState({ smbInfo: newJson });
+    window.ipcRenderer?.emit(IPCEnum.UpdateFile, { key: fileKey, json: newJson });
   };
 
-  return { json: state[fileKey], setJson, open: () => send(IPCEnum.OpenFile) };
+  const fileInfo = state[fileKey] as FileItem;
+
+  return {
+    status: fileInfo.status,
+    json: fileInfo.value as any,
+    setJson,
+    open: () => send(IPCEnum.OpenFile, fileKey),
+  };
 }

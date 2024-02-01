@@ -1,7 +1,5 @@
 import { ProForm, ProFormInstance, ProFormRadio, ProFormSelect, ProFormSwitch } from '@ant-design/pro-components';
-import ReactJson from 'react-json-view';
 import { useRef, useState } from 'react';
-import { Button } from 'antd';
 import { useUpdateEffect } from 'ahooks';
 import { FileKeyEnum } from '@constants/enum';
 import { useFile } from '@/hooks/useFile';
@@ -15,7 +13,7 @@ interface FormFields {
 const EnvTools: React.FC = () => {
   const formRef = useRef<ProFormInstance>();
   const [appType, setAppType] = useState('non-beta');
-  const { json, setJson, open } = useFile(appType === 'beta' ? FileKeyEnum.betaConfigJson : FileKeyEnum.configJson);
+  const { json, setJson, open } = useFile(appType === 'beta' ? FileKeyEnum.BetaConfigJson : FileKeyEnum.ConfigJson);
 
   useUpdateEffect(() => {
     formRef?.current?.setFieldsValue({ EntryUrl: json?.EntryUrl, CertPin: json?.CertPin });

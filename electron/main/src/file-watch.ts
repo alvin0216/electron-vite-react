@@ -8,6 +8,22 @@ import { useBridge } from './utils/bridge';
 export function ipcWatchFiles(win: BrowserWindow) {
   const bridge = useBridge(win);
 
+  ipcMain.on(IPCEnum.UpdateFile, (args, payload) => {
+    // const { key, json } = payload;
+    // const path = fileWatchMap.get(key)!;
+    // updateJson(path, json);
+    console.log('update....', payload);
+  });
+
+  bridge.handle(IPCEnum.ReadFile, () => {
+    return {
+      ...readFile(fileWatchMap.get(FileKeyEnum.ConfigJson)!),
+      ...readFile(fileWatchMap.get(FileKeyEnum.BetaConfigJson)!),
+      ...readFile(fileWatchMap.get(FileKeyEnum.ConfigJson)!),
+      ...readFile(fileWatchMap.get(FileKeyEnum.Hypothesis)!),
+    };
+  });
+
   // File Watch - handle cahnge & removed
   function watchFunc() {
     const filePaths = [...fileWatchMap.values()];
@@ -16,7 +32,11 @@ export function ipcWatchFiles(win: BrowserWindow) {
     // file watcher.......
     const handleFileChange = (path: string) => {
       const key = getFileKey(path)!;
-      bridge.sendToWeb(IPCEnum.OnFileChange, readFile(key, path));
+      try {
+        win?.webContents.send(IPCEnum.OnFileChange, readFile(path));
+      } catch (e) {
+        console.log('Error', e);
+      }
     };
     watcher
       .on('add', handleFileChange)
@@ -27,21 +47,9 @@ export function ipcWatchFiles(win: BrowserWindow) {
       });
 
     // read file && init data to web
-
-    bridge.handle(IPCEnum.ReadFile, () => {
-      const result = [...fileWatchMap.keys()].map((k) => readFile(k, fileWatchMap.get(k)!));
-
-      return result;
-    });
   }
 
   watchFunc();
-
-  bridge.on(IPCEnum.UpdateFile, (args, payload: { key: FileKeyEnum; json: object }) => {
-    const { key, json } = payload;
-    const path = fileWatchMap.get(key)!;
-    updateJson(path, json);
-  });
 }
 
 function getFileKey(path: string) {
@@ -50,11 +58,15 @@ function getFileKey(path: string) {
   }
 }
 
-function readFile(key: FileKeyEnum, path: string) {
-  console.log(key, path);
-  const exists = existsSync(path);
-  if (!exists) return { key, value: {}, status: FileStatus.NotFound };
-  const writeable = isFileWritable(path);
-  const value = readJson(path);
-  return { key, value, status: writeable ? FileStatus.Writeable : FileStatus.Readonly };
+function readFile(path: string) {
+  try {
+    const key = getFileKey(path)!;
+    const exists = existsSync(path);
+    if (!exists) return { [key]: { value: {}, status: FileStatus.NotFound } };
+    const writeable = isFileWritable(path);
+    const value = readJson(path);
+    return { [key]: { value, status: writeable ? FileStatus.Writeable : FileStatus.Readonly } };
+  } catch (e) {
+    console.log('readFile Error', e);
+  }
 }

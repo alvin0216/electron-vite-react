@@ -4,7 +4,7 @@
   "NavigationTimeOut": 5,
   "Headers": {
     "x-ab-param": {
-      "Geo": "GB",
+      "Geo": "G2B",
       "DirectBeta": "false",
       "Uuid": "c5047856-32ed-41d8-ad58-7325ab8a6581"
     },
