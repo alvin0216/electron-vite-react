@@ -8,15 +8,16 @@ import PCSetting from './PCSetting';
 
 const items: TabsProps['items'] = [
   {
-    key: 'EnvTools',
-    label: 'EnvTools',
-    children: <EnvTools />,
-  },
-  {
     key: 'SMBInfo',
     label: 'SMBInfo',
     children: <SMBInfo />,
   },
+  {
+    key: 'EnvTools',
+    label: 'EnvTools',
+    children: <EnvTools />,
+  },
+
   {
     key: 'Hypothesis',
     label: 'Hypothesis',

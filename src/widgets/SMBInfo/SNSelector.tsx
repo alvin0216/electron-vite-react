@@ -1,10 +1,13 @@
-import { PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { Button, Divider, Input, Select, Space } from 'antd';
+import { AppstoreAddOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import { useBoolean } from 'ahooks';
+import { Button, Divider, Drawer, Input, Modal, Select, Space } from 'antd';
 
 interface SNSelectorProps {}
 
 const SNSelector: React.FC<SNSelectorProps> = (props) => {
   const OPTIONS = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+
+  const [modalVisible, { setTrue, setFalse }] = useBoolean(false);
 
   return (
     <>
@@ -15,27 +18,7 @@ const SNSelector: React.FC<SNSelectorProps> = (props) => {
           value: item,
           label: `${item}(${item})`,
         }))}
-        dropdownRender={(menu) => {
-          return (
-            <>
-              {menu}
-              <Divider style={{ margin: '8px 0' }} />
-              {/* <Input placeholder='Please enter item' /> */}
-            </>
-          );
-        }}></Select>
-      <Select
-        className='w-200'
-        placeholder='Select a MTM'
-        dropdownRender={(menu) => {
-          return (
-            <>
-              {menu}
-              <Divider style={{ margin: '8px 0' }} />
-              {/* <Input placeholder='Please enter item' /> */}
-            </>
-          );
-        }}></Select>
+      />
     </>
   );
 };

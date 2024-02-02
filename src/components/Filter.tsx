@@ -1,5 +1,7 @@
 import ServiceController from '@/components/ServiceController';
-import { Alert, Badge, Select, Space, Switch, Typography } from 'antd';
+import SNSelector from '@/widgets/SMBInfo/SNSelector';
+import { SettingOutlined } from '@ant-design/icons';
+import { Alert, Badge, Button, Select, Space, Switch, Typography } from 'antd';
 import { produce } from 'immer';
 import { useMemo, useState } from 'react';
 import ReactJson from 'react-json-view';
@@ -70,7 +72,7 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
   };
 
   return (
-    <div>
+    <>
       <Space wrap>
         <Select
           showSearch
@@ -82,14 +84,15 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
           onChange={setKey}
         />
 
-        <ServiceController action='reboot' />
         {children}
+
+        <ServiceController action='reboot' />
       </Space>
 
       {key && (
         <Alert key={key} className='mt-4' message='Search Result' type='info' closable description={renderResult()} />
       )}
-    </div>
+    </>
   );
 };
 
