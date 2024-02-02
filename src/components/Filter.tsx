@@ -34,7 +34,7 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
         );
 
       // object
-      case typeof value === 'object':
+      case typeof value === 'object' && value !== null:
         return <ReactJson name={key} displayDataTypes={false} src={value} />;
 
       // toggle true & false
@@ -62,7 +62,7 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
           <Space>
             {key}:
             <Paragraph editable className='!mb-0'>
-              {value}
+              {String(value)}
             </Paragraph>
           </Space>
         );

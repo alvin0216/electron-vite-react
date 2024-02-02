@@ -10,7 +10,7 @@ export function useIpcListener() {
   useMount(() => {
     invoke(IPCEnum.ReadFile)
       .then((res) => {
-        setStore(res);
+        // setStore(res);
       })
       .catch((e) => {
         console.debug(`%c ${IPCEnum.ReadFile} Error:`, 'color: red', e);

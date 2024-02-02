@@ -8,7 +8,10 @@ const SMBInfo: React.FC = () => {
 
   return (
     <div className='grid grid-cols-2 gap-4'>
-      <Filter json={json} setJson={setJson} />
+      <Filter json={json} setJson={setJson}>
+        xx
+        {/* h2 */}
+      </Filter>
       <JsonView title='SMBInfo.json' json={json} setJson={setJson} open={open} />
     </div>
   );

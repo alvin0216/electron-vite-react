@@ -1,9 +1,10 @@
 import { createContext } from 'react';
 import { useSetState } from 'ahooks';
 import { FileStatus } from '@constants/enum';
+import SMBInfo from '../../dev/SMBInfo.json';
 
 const defaultState: StoreState = {
-  smbInfo: { value: {}, status: FileStatus.Writeable },
+  smbInfo: { value: SMBInfo, status: FileStatus.Writeable },
   hypothesis: { value: {}, status: FileStatus.Writeable },
   configJson: { value: {}, status: FileStatus.Writeable },
   betaConfigJson: { value: {}, status: FileStatus.Writeable },

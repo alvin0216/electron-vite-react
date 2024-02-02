@@ -8,9 +8,10 @@ interface JsonViewProps {
   setJson: (newJson: object) => void;
   open: () => void;
   isFileReadonly?: boolean;
+  sortKeys?: boolean;
 }
 
-const JsonView: React.FC<JsonViewProps> = ({ json, setJson, title, open, isFileReadonly }) => {
+const JsonView: React.FC<JsonViewProps> = ({ json, setJson, title, open, isFileReadonly, sortKeys }) => {
   const showFileStatus = isFileReadonly !== undefined;
 
   const renderTitle = () => {
@@ -44,7 +45,7 @@ const JsonView: React.FC<JsonViewProps> = ({ json, setJson, title, open, isFileR
           </Tooltip>
         </Space>
       }
-      sortKeys
+      sortKeys={sortKeys}
       src={json}
       enableClipboard={false}
       displayDataTypes={false}
