@@ -1,4 +1,5 @@
 import { ProForm, ProFormInstance, ProFormRadio, ProFormSelect, ProFormSwitch } from '@ant-design/pro-components';
+
 import { useRef, useState } from 'react';
 import { useUpdateEffect } from 'ahooks';
 import { FileKeyEnum } from '@constants/enum';
@@ -42,7 +43,7 @@ const EnvTools: React.FC = () => {
         <ProFormSwitch name='CertPin' label='CertPin' />
 
         <ProFormSelect
-          wrapperCol={{ span: 6 }}
+          width={200}
           name='EntryUrl'
           label='Entry'
           allowClear={false}

@@ -71,7 +71,7 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
 
   return (
     <div>
-      <Space>
+      <Space wrap>
         <Select
           showSearch
           className='w-200'
