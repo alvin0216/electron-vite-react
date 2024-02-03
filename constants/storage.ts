@@ -3,4 +3,6 @@ export enum StorgeEnum {
   Countries = 'countries',
   SnList = 'snList',
   MtmList = 'mtmList',
+  SMBFilters = 'smbFilters',
+  HypFilters = 'hypFilters',
 }

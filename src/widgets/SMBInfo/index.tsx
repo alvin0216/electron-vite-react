@@ -1,4 +1,3 @@
-import Filter from '@/components/Filter';
 import JsonView from '@/components/JsonView';
 import { useFile } from '@/hooks/useFile';
 import { FileKeyEnum, FileStatus } from '@constants/enum';
@@ -7,6 +6,8 @@ import { Col, Row, Space } from 'antd';
 import Customize from './Customize';
 import { SMBCacheContext, useInitialSMBCache } from '@/contexts/SMBCacheContext';
 import ServiceController from '@/components/ServiceController';
+import FilterSelect from '@/components/FilterSelect';
+import FilterResult from '@/components/FilterResult';
 
 const SMBInfo: React.FC = () => {
   const { json, setJson, open, status } = useFile(FileKeyEnum.SMBInfo);
@@ -31,8 +32,9 @@ const SMBInfo: React.FC = () => {
             />
             <Customize />
             <ServiceController action='reboot' />
-            <Filter json={json} setJson={setJson}></Filter>
+            <FilterSelect json={json} value={ctx.filters} onChange={ctx.setFilters} />
           </Space>
+          <FilterResult json={json} setJson={setJson} filters={ctx.filters!} />
         </Col>
 
         <Col span={12}>
