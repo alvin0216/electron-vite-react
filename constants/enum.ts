@@ -3,6 +3,8 @@ export enum IPCEnum {
   UpdateFile = 'UpdateFile',
   OpenFile = 'OpenFile',
   OnFileChange = 'OnFileChange',
+  // Set Hypothesis status - writable readonly
+  SetHYPStatus = 'SetHYPStatus',
 
   // invoke
   ChangeServiceStatus = 'ChangeServiceStatus',
@@ -26,4 +28,9 @@ export enum FileStatus {
 export enum AppTypeEnum {
   Beta = 'beta',
   NonBeta = 'non-beta',
+}
+
+export enum IndentationEnum {
+  Two = 2,
+  Four = 4,
 }

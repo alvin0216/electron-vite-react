@@ -9,6 +9,11 @@ import Translation from './Translation';
 
 const items: TabsProps['items'] = [
   {
+    key: 'Translation',
+    label: 'Translation',
+    children: <Translation />,
+  },
+  {
     key: 'Hypothesis',
     label: 'Hypothesis',
     children: <Hypothesis />,
@@ -28,11 +33,6 @@ const items: TabsProps['items'] = [
     key: 'PCSetting',
     label: 'PC Setting',
     children: <PCSetting />,
-  },
-  {
-    key: 'Translation',
-    label: 'Translation',
-    children: <Translation />,
   },
 ];
 
