@@ -28,7 +28,7 @@
     "@unocss/reset": "^0.58.4",
     "ahooks": "^3.7.8",
     "antd": "^5.13.2",
-    "axios": "^1.6.5",
+    "axios": "^1.6.6",
     "chokidar": "^3.5.3",
     "dayjs": "^1.11.10",
     "electron-updater": "^6.1.1",

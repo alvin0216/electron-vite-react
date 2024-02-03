@@ -6,8 +6,14 @@ import SMBInfo from './SMBInfo';
 import Hypothesis from './Hypothesis';
 import PCSetting from './PCSetting';
 import Translation from './Translation';
+import Advanced from './Advanced';
 
 const items: TabsProps['items'] = [
+  {
+    key: 'Advanced',
+    label: 'Advanced',
+    children: <Advanced />,
+  },
   {
     key: 'Translation',
     label: 'Translation',

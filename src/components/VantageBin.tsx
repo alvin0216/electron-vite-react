@@ -5,7 +5,7 @@ interface IProps {
   action: ServiceAction;
 }
 
-const ServiceController: React.FC<IProps> = ({ action }) => {
+const VantageBin: React.FC<IProps> = ({ action }) => {
   const { running, dot, run, disabled } = useService(action);
 
   return (
@@ -23,4 +23,4 @@ const ServiceController: React.FC<IProps> = ({ action }) => {
   );
 };
 
-export default ServiceController;
+export default VantageBin;

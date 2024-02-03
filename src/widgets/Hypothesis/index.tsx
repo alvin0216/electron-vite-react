@@ -1,7 +1,7 @@
 import FilterResult from '@/components/FilterResult';
 import FilterSelect from '@/components/FilterSelect';
 import JsonView from '@/components/JsonView';
-import ServiceController from '@/components/ServiceController';
+import VantageBin from '@/components/VantageBin';
 import { useFile } from '@/hooks/useFile';
 import { FileKeyEnum } from '@constants/enum';
 import { StorgeEnum } from '@constants/storage';
@@ -27,7 +27,7 @@ const Hypothesis: React.FC = () => {
       <Col span={12}>
         <Space wrap>
           <ToggleWriteable fileStatus={status as any} />
-          <ServiceController action='reboot' />
+          <VantageBin action='reboot' />
           <FilterSelect json={json} value={filters} onChange={setFilters!} />
         </Space>
         <FilterResult json={json} setJson={setJson} filters={filters!} />

@@ -5,7 +5,7 @@ import { SNSelector, MtmSelector } from './Selector';
 import { Col, Row, Space } from 'antd';
 import Customize from './Customize';
 import { SMBCacheContext, useInitialSMBCache } from '@/contexts/SMBCacheContext';
-import ServiceController from '@/components/ServiceController';
+import VantageBin from '@/components/VantageBin';
 import FilterSelect from '@/components/FilterSelect';
 import FilterResult from '@/components/FilterResult';
 
@@ -31,7 +31,7 @@ const SMBInfo: React.FC = () => {
               }}
             />
             <Customize />
-            <ServiceController action='reboot' />
+            <VantageBin action='reboot' />
             <FilterSelect json={json} value={ctx.filters} onChange={ctx.setFilters} />
           </Space>
           <FilterResult json={json} setJson={setJson} filters={ctx.filters!} />
