@@ -1,7 +1,6 @@
-import { useLocalStorageState } from 'ahooks';
 import { defaultCmdList } from './cmdList';
 import { ProList } from '@ant-design/pro-components';
-import TerminalIcon from '../../components/Icons/TerminalIcon';
+import TerminalIcon from '../../components/TerminalIcon';
 import PannelLeft from './PannelLeft';
 import { Key, useState } from 'react';
 import PannelRight from './PannelRight';
@@ -9,8 +8,6 @@ import { produce } from 'immer';
 import './styles.css';
 
 const CommandTools: React.FC = () => {
-  // const [cmdList, setCmdList] = useLocalStorageState('cmdList', { defaultValue: defaultCmdList });
-
   const [cmdList, setCmdList] = useState<CmdItem[]>(defaultCmdList);
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly Key[]>([]);
 

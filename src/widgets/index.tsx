@@ -7,8 +7,20 @@ import Hypothesis from './Hypothesis';
 import PCSetting from './PCSetting';
 import Translation from './Translation';
 import Advanced from './Advanced';
+import CommandTools from './CommandTools';
+import SSRB from './SSRB';
 
 const items: TabsProps['items'] = [
+  {
+    key: 'SSRB',
+    label: 'SSRB',
+    children: <SSRB />,
+  },
+  {
+    key: 'CommandTools',
+    label: 'Terminal',
+    children: <CommandTools />,
+  },
   {
     key: 'Advanced',
     label: 'Advanced',
