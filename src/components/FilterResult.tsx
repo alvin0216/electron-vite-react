@@ -1,6 +1,7 @@
 import { Alert, Badge, Switch, Typography } from 'antd';
 import { produce } from 'immer';
 import ReactJson from 'react-json-view';
+import TagEditor from './TagEditor';
 const { Paragraph } = Typography;
 
 interface FilterResultProps {
@@ -37,6 +38,20 @@ const FilterResult: React.FC<FilterResultProps> = ({ json, setJson, filters }) =
                 })
               )
             }
+          />
+        );
+
+      case key === 'WebAppAlwaysOffline':
+        return (
+          <TagEditor
+            tags={value.length === 0 ? [] : value.split(',')}
+            setTags={(tags) => {
+              setJson(
+                produce(json, (draft: any) => {
+                  draft.WebAppAlwaysOffline = tags.join(',');
+                })
+              );
+            }}
           />
         );
 

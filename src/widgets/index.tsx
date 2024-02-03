@@ -9,14 +9,14 @@ import Translation from './Translation';
 
 const items: TabsProps['items'] = [
   {
-    key: 'SMBInfo',
-    label: 'SMBInfo',
-    children: <SMBInfo />,
-  },
-  {
     key: 'Hypothesis',
     label: 'Hypothesis',
     children: <Hypothesis />,
+  },
+  {
+    key: 'SMBInfo',
+    label: 'SMBInfo',
+    children: <SMBInfo />,
   },
   {
     key: 'EnvTools',
