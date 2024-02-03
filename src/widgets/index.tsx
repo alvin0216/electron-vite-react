@@ -14,16 +14,16 @@ const items: TabsProps['items'] = [
     children: <SMBInfo />,
   },
   {
+    key: 'Hypothesis',
+    label: 'Hypothesis',
+    children: <Hypothesis />,
+  },
+  {
     key: 'EnvTools',
     label: 'EnvTools',
     children: <EnvTools />,
   },
 
-  {
-    key: 'Hypothesis',
-    label: 'Hypothesis',
-    children: <Hypothesis />,
-  },
   {
     key: 'PCSetting',
     label: 'PC Setting',

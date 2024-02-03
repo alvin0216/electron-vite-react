@@ -14,7 +14,9 @@ interface FilterProps {
 }
 
 const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
-  const [key, setKey] = useState<string>();
+  const [keys, setKeys] = useState<string[]>([]);
+
+  const isRenderResult = keys.length > 0;
 
   const options = useMemo(() => {
     return Object.keys(json)
@@ -22,7 +24,7 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
       .map((value) => ({ value }));
   }, [json]);
 
-  const renderResult = () => {
+  const renderResult = (key: string) => {
     if (!key) return null;
     const value = json[key];
 
@@ -75,22 +77,30 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
     <>
       <Space wrap>
         <Select
+          mode='multiple'
           showSearch
-          className='w-200'
+          className='w-260'
           placeholder='input search text'
           allowClear
           options={options}
-          value={key}
-          onChange={setKey}
+          value={keys}
+          onChange={setKeys}
         />
-
         {children}
-
         <ServiceController action='reboot' />
       </Space>
 
-      {key && (
-        <Alert key={key} className='mt-4' message='Search Result' type='info' closable description={renderResult()} />
+      {isRenderResult && (
+        <Alert
+          key={keys.join(',')}
+          className='mt-4'
+          message='Search Result'
+          type='info'
+          closable
+          description={keys.map((key) => (
+            <div key={key}>{renderResult(key)}</div>
+          ))}
+        />
       )}
     </>
   );

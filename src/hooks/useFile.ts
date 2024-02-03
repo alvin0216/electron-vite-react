@@ -14,6 +14,7 @@ export function useFile(fileKey: FileKeyEnum) {
         produce(state, (draft) => {
           draft[fileKey].status = FileStatus.Writeable;
           draft[fileKey].value = newJson;
+          if (fileKey === FileKeyEnum.SMBInfo || fileKey === FileKeyEnum.Hypothesis) draft.service.bootingDot = true;
         })
       );
     }

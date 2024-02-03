@@ -4,7 +4,7 @@ import { FileStatus } from '@constants/enum';
 import SMBInfo from '../../dev/SMBInfo.json';
 
 const defaultState: StoreState = {
-  smbInfo: { value: {}, status: FileStatus.NotFound },
+  smbInfo: { value: SMBInfo, status: FileStatus.NotFound },
   hypothesis: { value: {}, status: FileStatus.Readonly },
   configJson: { value: {}, status: FileStatus.Writeable },
   betaConfigJson: { value: {}, status: FileStatus.Writeable },
