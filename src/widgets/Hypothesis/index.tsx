@@ -26,7 +26,7 @@ const Hypothesis: React.FC = () => {
     <Row>
       <Col span={12}>
         <Space wrap>
-          <ToggleWriteable />
+          <ToggleWriteable fileStatus={status as any} />
           <ServiceController action='reboot' />
           <FilterSelect json={json} value={filters} onChange={setFilters!} />
         </Space>
