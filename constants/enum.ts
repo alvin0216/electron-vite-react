@@ -9,6 +9,7 @@ export enum IPCEnum {
   // invoke
   ChangeServiceStatus = 'ChangeServiceStatus',
   Errorlog = 'Errorlog',
+  Translate = 'Translate',
 }
 
 // ....

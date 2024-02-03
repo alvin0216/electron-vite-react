@@ -1,9 +1,9 @@
 import { fileWatchMap } from '@constants/resource';
 import chokidar from 'chokidar';
 import { BrowserWindow, ipcMain } from 'electron';
-import { existsSync, isFileWritable, readJson, updateJson } from './utils/fs-helper';
+import { existsSync, isFileWritable, readJson, updateJson } from '../utils/fs-helper';
 import { FileKeyEnum, FileStatus, IPCEnum } from '@constants/enum';
-import { useBridge } from './utils/bridge';
+import { useBridge } from '../utils/bridge';
 
 export function ipcWatchFiles(win: BrowserWindow) {
   const bridge = useBridge(win);
