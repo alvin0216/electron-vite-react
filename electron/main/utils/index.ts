@@ -8,3 +8,17 @@ export function MergeRecursive(source: any, target: any) {
     }
   }
 }
+
+/** 对象属性排序 返回新对象*/
+export function sortProperties(obj: object) {
+  let o = {};
+
+  Object.keys(obj)
+    .sort()
+    .forEach((k) => {
+      // @ts-ignore
+      o[k] = obj[k].constructor === Object ? sortProperties(obj[k]) : obj[k];
+    });
+
+  return o;
+}

@@ -8,7 +8,7 @@ import JsonView from '@/components/JsonView';
 
 interface FormFields {
   EntryUrl: string;
-  CertPin: boolean;
+  CertPin: 'on' | 'off';
 }
 
 const EnvTools: React.FC = () => {
@@ -32,7 +32,7 @@ const EnvTools: React.FC = () => {
         formRef={formRef}
         layout='horizontal'
         onValuesChange={onValuesChange}
-        initialValues={{ VantageType: 'beta' }}
+        initialValues={{ VantageType: 'beta', CertPin: 'off' }}
         submitter={false}>
         <ProFormRadio.Group
           label='Vantage'
@@ -42,7 +42,15 @@ const EnvTools: React.FC = () => {
             onChange: (e) => setAppType(e.target.value),
           }}
         />
-        <ProFormSwitch name='CertPin' label='CertPin' />
+        <ProFormSwitch
+          label='CertPin'
+          fieldProps={{
+            checked: json.CertPin === 'on',
+            onChange: (checked) => {
+              setJson({ ...json, CertPin: checked ? 'on' : 'off' });
+            },
+          }}
+        />
 
         <ProFormSelect
           width={200}
