@@ -1,50 +1,43 @@
 import { FolderOpenOutlined } from '@ant-design/icons';
-import { Badge, Button, Space, Tooltip } from 'antd';
+import { FileStatus } from '@constants/enum';
+import { Button, Space, Tooltip } from 'antd';
 import ReactJson from 'react-json-view';
 
 interface JsonViewProps {
-  title: string;
+  title: React.ReactNode;
+  fileStatus?: FileStatus;
   json: any;
   setJson: (newJson: object) => void;
   open: () => void;
-  isFileReadonly?: boolean;
   sortKeys?: boolean;
 }
 
-const JsonView: React.FC<JsonViewProps> = ({ json, setJson, title, open, isFileReadonly, sortKeys }) => {
-  const showFileStatus = isFileReadonly !== undefined;
-
-  const renderTitle = () => {
-    if (!showFileStatus) return <span>{title}</span>;
-    const subTitle = isFileReadonly ? '(readonly)' : '(writable)';
-    return (
-      <span>
+const JsonView: React.FC<JsonViewProps> = ({ json, setJson, title, open, fileStatus, sortKeys }) => {
+  const Title = () => (
+    <Space>
+      <Space>
         {title}
-        <span className='c-gray'>{subTitle}</span>
-      </span>
-    );
-  };
+        <span className='c-gray'>({fileStatus})</span>
+      </Space>
+      <Tooltip title='open file'>
+        <Button
+          disabled={fileStatus === FileStatus.NotFound}
+          className='!w-auto !h-auto p-0'
+          icon={<FolderOpenOutlined />}
+          type='link'
+          onClick={(e) => {
+            e.stopPropagation();
+            open();
+          }}
+        />
+      </Tooltip>
+    </Space>
+  );
 
   return (
     <ReactJson
       // @ts-ignore
-      name={
-        <Space>
-          {renderTitle()}
-
-          <Tooltip title='open file'>
-            <Button
-              className='!w-auto !h-auto p-0'
-              icon={<FolderOpenOutlined />}
-              type='link'
-              onClick={(e) => {
-                e.stopPropagation();
-                open();
-              }}
-            />
-          </Tooltip>
-        </Space>
-      }
+      name={<Title />}
       sortKeys={sortKeys}
       src={json}
       enableClipboard={false}

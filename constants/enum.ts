@@ -22,3 +22,8 @@ export enum FileStatus {
   Readonly = 'readonly',
   NotFound = 'not found',
 }
+
+export enum AppTypeEnum {
+  Beta = 'beta',
+  NonBeta = 'non-beta',
+}

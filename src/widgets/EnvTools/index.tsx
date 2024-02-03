@@ -2,7 +2,7 @@ import { ProForm, ProFormInstance, ProFormRadio, ProFormSelect, ProFormSwitch } 
 
 import { useRef, useState } from 'react';
 import { useUpdateEffect } from 'ahooks';
-import { FileKeyEnum } from '@constants/enum';
+import { AppTypeEnum, FileKeyEnum } from '@constants/enum';
 import { useFile } from '@/hooks/useFile';
 import JsonView from '@/components/JsonView';
 
@@ -14,7 +14,9 @@ interface FormFields {
 const EnvTools: React.FC = () => {
   const formRef = useRef<ProFormInstance>();
   const [appType, setAppType] = useState('non-beta');
-  const { json, setJson, open } = useFile(appType === 'beta' ? FileKeyEnum.BetaConfigJson : FileKeyEnum.ConfigJson);
+  const { json, setJson, open, status } = useFile(
+    appType === AppTypeEnum.Beta ? FileKeyEnum.BetaConfigJson : FileKeyEnum.ConfigJson
+  );
 
   useUpdateEffect(() => {
     formRef?.current?.setFieldsValue({ EntryUrl: json?.EntryUrl, CertPin: json?.CertPin });
@@ -34,7 +36,7 @@ const EnvTools: React.FC = () => {
         submitter={false}>
         <ProFormRadio.Group
           label='Vantage'
-          valueEnum={{ 'non-beta': 'non-beta', beta: 'beta' }}
+          valueEnum={{ [AppTypeEnum.NonBeta]: AppTypeEnum.NonBeta, [AppTypeEnum.Beta]: AppTypeEnum.Beta }}
           fieldProps={{
             value: appType,
             onChange: (e) => setAppType(e.target.value),
@@ -61,7 +63,7 @@ const EnvTools: React.FC = () => {
         />
       </ProForm>
 
-      <JsonView title='config.json' json={json} setJson={setJson} open={open} />
+      <JsonView title='config.json' fileStatus={status as any} json={json} setJson={setJson} open={open} />
     </div>
   );
 };

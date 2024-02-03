@@ -1,5 +1,5 @@
 import ServiceController from '@/components/ServiceController';
-import SNSelector from '@/widgets/SMBInfo/SNSelector';
+import SNSelector from '@/widgets/SMBInfo/Selector';
 import { SettingOutlined } from '@ant-design/icons';
 import { Alert, Badge, Button, Select, Space, Switch, Typography } from 'antd';
 import { produce } from 'immer';
