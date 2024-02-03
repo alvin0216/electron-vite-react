@@ -31,11 +31,7 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
     switch (true) {
       // removed
       case value === undefined:
-        return (
-          <Space>
-            {key}: <Badge status='error' text={<span className='c-gray'>Removed</span>} />
-          </Space>
-        );
+        return <Badge status='error' text={<span className='c-gray'>Removed</span>} />;
 
       // object
       case typeof value === 'object' && value !== null:
@@ -44,51 +40,41 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
       // toggle true & false
       case value === 'true' || value === 'false':
         return (
-          <Space>
-            {key}:
-            <Switch
-              checkedChildren='true'
-              unCheckedChildren='false'
-              checked={value === 'true'}
-              onChange={(checked) =>
-                setJson(
-                  produce(json, (draft: any) => {
-                    draft[key] = checked ? 'true' : 'false';
-                  })
-                )
-              }
-            />
-          </Space>
+          <Switch
+            checkedChildren='true'
+            unCheckedChildren='false'
+            checked={value === 'true'}
+            onChange={(checked) =>
+              setJson(
+                produce(json, (draft: any) => {
+                  draft[key] = checked ? 'true' : 'false';
+                })
+              )
+            }
+          />
         );
 
       default:
         return (
-          <Space>
-            {key}:
-            <Paragraph editable className='!mb-0'>
-              {String(value)}
-            </Paragraph>
-          </Space>
+          <Paragraph editable className='!mb-0'>
+            {String(value)}
+          </Paragraph>
         );
     }
   };
 
   return (
     <>
-      <Space wrap>
-        <Select
-          mode='multiple'
-          showSearch
-          className='w-260'
-          placeholder='input search text'
-          allowClear
-          options={options}
-          value={keys}
-          onChange={setKeys}
-        />
-        {children}
-        <ServiceController action='reboot' />
-      </Space>
+      <Select
+        className='min-w-260'
+        mode='multiple'
+        showSearch
+        placeholder='input search text'
+        allowClear
+        options={options}
+        value={keys}
+        onChange={setKeys}
+      />
 
       {isRenderResult && (
         <Alert
@@ -98,7 +84,10 @@ const Filter: React.FC<FilterProps> = ({ json, setJson, children }) => {
           type='info'
           closable
           description={keys.map((key) => (
-            <div key={key}>{renderResult(key)}</div>
+            <div key={key} className='mb-8 flex'>
+              <span className='pr-8'>{key}:</span>
+              {renderResult(key)}
+            </div>
           ))}
         />
       )}

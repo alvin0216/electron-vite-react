@@ -3,9 +3,10 @@ import JsonView from '@/components/JsonView';
 import { useFile } from '@/hooks/useFile';
 import { FileKeyEnum, FileStatus } from '@constants/enum';
 import { SNSelector, MtmSelector } from './Selector';
-import { Col, Row } from 'antd';
+import { Col, Row, Space } from 'antd';
 import Customize from './Customize';
 import { SMBCacheContext, useInitialSMBCache } from '@/contexts/SMBCacheContext';
+import ServiceController from '@/components/ServiceController';
 
 const SMBInfo: React.FC = () => {
   const { json, setJson, open, status } = useFile(FileKeyEnum.SMBInfo);
@@ -15,7 +16,7 @@ const SMBInfo: React.FC = () => {
     <SMBCacheContext.Provider value={ctx as any}>
       <Row>
         <Col span={12}>
-          <Filter json={json} setJson={setJson}>
+          <Space wrap>
             <SNSelector
               value={json.LenovoSerialNumber}
               onChange={(v) => {
@@ -29,7 +30,9 @@ const SMBInfo: React.FC = () => {
               }}
             />
             <Customize />
-          </Filter>
+            <ServiceController action='reboot' />
+            <Filter json={json} setJson={setJson}></Filter>
+          </Space>
         </Col>
 
         <Col span={12}>
