@@ -1,4 +1,4 @@
-import { AppstoreOutlined, BarsOutlined, SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined } from '@ant-design/icons';
 import { useBoolean } from 'ahooks';
 import { Button, Drawer, Segmented, Tooltip } from 'antd';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ enum TabEnum {
 }
 
 const Customize: React.FC = () => {
-  const [modalVisible, { setTrue, setFalse }] = useBoolean(true);
+  const [modalVisible, { setTrue, setFalse }] = useBoolean(false);
   const [tabKey, setTabKey] = useState(TabEnum.Sn);
 
   return (
@@ -19,15 +19,6 @@ const Customize: React.FC = () => {
         <Button icon={<SettingOutlined />} onClick={setTrue} />
       </Tooltip>
       <Drawer title='Customize SMBInfo Pannel' open={modalVisible} onClose={setFalse} placement='top' height='100vh'>
-        <Segmented
-          className='mb-4'
-          value={tabKey}
-          onChange={(v) => setTabKey(v as TabEnum)}
-          options={[
-            { icon: <AppstoreOutlined />, label: 'SerialNumber', value: TabEnum.Sn },
-            { icon: <BarsOutlined />, label: 'Mtm', value: TabEnum.Mtm },
-          ]}
-        />
         <CustomizeList />
       </Drawer>
     </>

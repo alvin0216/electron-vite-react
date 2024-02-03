@@ -1,18 +1,15 @@
 declare interface SNItem {
-  sn: string;
-  title: string;
-}
-
-declare interface SNItem {
   id: React.Key;
   sn: string;
   desc: string;
   index: number;
 }
 
-declare interface SNItem {
+declare interface MtmItem {
   id: React.Key;
   mtm: string;
   desc: string;
   index: number;
 }
+
+declare type SMBCacheItem = SNItem | MtmItem;

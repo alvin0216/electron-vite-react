@@ -5,6 +5,7 @@ import EnvTools from './EnvTools';
 import SMBInfo from './SMBInfo';
 import Hypothesis from './Hypothesis';
 import PCSetting from './PCSetting';
+import Translation from './Translation';
 
 const items: TabsProps['items'] = [
   {
@@ -27,6 +28,11 @@ const items: TabsProps['items'] = [
     key: 'PCSetting',
     label: 'PC Setting',
     children: <PCSetting />,
+  },
+  {
+    key: 'Translation',
+    label: 'Translation',
+    children: <Translation />,
   },
 ];
 
