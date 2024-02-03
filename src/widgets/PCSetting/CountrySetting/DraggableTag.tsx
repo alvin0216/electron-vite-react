@@ -1,4 +1,4 @@
-import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
+import { useSortable } from '@dnd-kit/sortable';
 import { Tag } from 'antd';
 
 type DraggableTagProps = {

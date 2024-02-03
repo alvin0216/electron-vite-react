@@ -9,6 +9,8 @@ export function useService(action: ServiceAction) {
 
   const run = () => {
     setStore({ service: { ...service, status: action } });
+    debugger;
+
     invoke(IPCEnum.ChangeServiceStatus, action)
       .then(() => {
         setStore({ service: { bootingDot: false, status: 'default' } });
