@@ -12,6 +12,26 @@ import SSRB from './SSRB';
 
 const items: TabsProps['items'] = [
   {
+    key: 'EnvTools',
+    label: 'EnvTools',
+    children: <EnvTools />,
+  },
+  {
+    key: 'PCSetting',
+    label: 'PC Setting',
+    children: <PCSetting />,
+  },
+  {
+    key: 'SMBInfo',
+    label: 'SMBInfo',
+    children: <SMBInfo />,
+  },
+  {
+    key: 'Hypothesis',
+    label: 'Hypothesis',
+    children: <Hypothesis />,
+  },
+  {
     key: 'Translation',
     label: 'Translation',
     children: <Translation />,
@@ -30,28 +50,6 @@ const items: TabsProps['items'] = [
     key: 'Advanced',
     label: 'Advanced',
     children: <Advanced />,
-  },
-  
-  {
-    key: 'Hypothesis',
-    label: 'Hypothesis',
-    children: <Hypothesis />,
-  },
-  {
-    key: 'SMBInfo',
-    label: 'SMBInfo',
-    children: <SMBInfo />,
-  },
-  {
-    key: 'EnvTools',
-    label: 'EnvTools',
-    children: <EnvTools />,
-  },
-
-  {
-    key: 'PCSetting',
-    label: 'PC Setting',
-    children: <PCSetting />,
   },
 ];
 

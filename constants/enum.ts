@@ -4,7 +4,7 @@ export enum IPCEnum {
   OpenFile = 'OpenFile',
   OnFileChange = 'OnFileChange',
   // Set Hypothesis status - writable readonly
-  SetHYPStatus = 'SetHYPStatus',
+  ToggleFileStatus = 'ToggleFileStatus',
 
   // invoke
   ChangeServiceStatus = 'ChangeServiceStatus',

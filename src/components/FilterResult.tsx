@@ -5,12 +5,13 @@ import TagEditor from './TagEditor';
 const { Paragraph } = Typography;
 
 interface FilterResultProps {
+  disabled?: boolean;
   filters: string[];
   json: object;
   setJson: (newJson: object) => void;
 }
 
-const FilterResult: React.FC<FilterResultProps> = ({ json, setJson, filters }) => {
+const FilterResult: React.FC<FilterResultProps> = ({ json, setJson, filters, disabled }) => {
   const renderResult = (key: string) => {
     // @ts-ignore
     const value = json[key];
@@ -28,6 +29,7 @@ const FilterResult: React.FC<FilterResultProps> = ({ json, setJson, filters }) =
       case value === 'true' || value === 'false':
         return (
           <Switch
+            disabled={disabled}
             checkedChildren='true'
             unCheckedChildren='false'
             checked={value === 'true'}
@@ -41,7 +43,7 @@ const FilterResult: React.FC<FilterResultProps> = ({ json, setJson, filters }) =
           />
         );
 
-      case key === 'WebAppAlwaysOffline':
+      case key === 'WebAppAlwaysOffline' && !disabled:
         return (
           <TagEditor
             tags={value.length === 0 ? [] : value.split(',')}
@@ -57,7 +59,18 @@ const FilterResult: React.FC<FilterResultProps> = ({ json, setJson, filters }) =
 
       default:
         return (
-          <Paragraph editable className='!mb-0'>
+          <Paragraph
+            editable={
+              !disabled && {
+                onChange: (v) =>
+                  setJson(
+                    produce(json, (draft: any) => {
+                      draft[key] = v;
+                    })
+                  ),
+              }
+            }
+            className='!mb-0'>
             {String(value)}
           </Paragraph>
         );

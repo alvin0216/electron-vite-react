@@ -1,25 +1,34 @@
 import { fileWatchMap } from '@constants/resource';
 import chokidar from 'chokidar';
-import { BrowserWindow, ipcMain } from 'electron';
-import { existsSync, isFileWritable, readJson, updateJson } from '../utils/fs-helper';
+import { BrowserWindow, ipcMain, shell } from 'electron';
+import { existsSync, isFileWritable, readJson, setFileReadOnly, setFileWritable, updateJson } from '../utils/fs-helper';
 import { FileKeyEnum, FileStatus, IPCEnum } from '@constants/enum';
-import { useBridge } from '../utils/bridge';
 
 export function ipcWatchFiles(win: BrowserWindow) {
-  const bridge = useBridge(win);
+  ipcMain
+    .on(IPCEnum.UpdateFile, (args, payload) => {
+      const { key, json } = payload;
+      const path = fileWatchMap.get(key)!;
+      updateJson(path, json);
+    })
+    .on(IPCEnum.OpenFile, (args, fileKey: FileKeyEnum) => {
+      const path = fileWatchMap.get(fileKey);
+      if (path) shell.showItemInFolder(path);
+    });
 
-  ipcMain.on(IPCEnum.UpdateFile, (args, payload) => {
-    // const { key, json } = payload;
-    // const path = fileWatchMap.get(key)!;
-    // updateJson(path, json);
-    console.log('update....', payload);
+  ipcMain.handle(IPCEnum.ToggleFileStatus, (args, { fileKey, status }) => {
+    const path = fileWatchMap.get(fileKey);
+    if (path) {
+      return status === FileStatus.Writeable ? setFileWritable(path) : setFileReadOnly(path);
+    }
+    return false;
   });
 
-  bridge.handle(IPCEnum.ReadFile, () => {
+  ipcMain.handle(IPCEnum.ReadFile, () => {
     return {
       ...readFile(fileWatchMap.get(FileKeyEnum.ConfigJson)!),
       ...readFile(fileWatchMap.get(FileKeyEnum.BetaConfigJson)!),
-      ...readFile(fileWatchMap.get(FileKeyEnum.ConfigJson)!),
+      ...readFile(fileWatchMap.get(FileKeyEnum.SMBInfo)!),
       ...readFile(fileWatchMap.get(FileKeyEnum.Hypothesis)!),
     };
   });
@@ -31,7 +40,6 @@ export function ipcWatchFiles(win: BrowserWindow) {
 
     // file watcher.......
     const handleFileChange = (path: string) => {
-      const key = getFileKey(path)!;
       try {
         win?.webContents.send(IPCEnum.OnFileChange, readFile(path));
       } catch (e) {

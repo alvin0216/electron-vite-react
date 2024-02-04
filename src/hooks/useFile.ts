@@ -6,26 +6,35 @@ import { produce } from 'immer';
 
 export function useFile(fileKey: FileKeyEnum) {
   const [state, setState] = useStore();
-  const { send } = useIpc();
+  const { send, invoke } = useIpc();
+  const fileInfo = state[fileKey] as FileItem;
+  const status = fileInfo.status;
 
-  const setJson = (newJson: object) => {
+  const [isReadonly, isWriteable, notFound] = [
+    status === FileStatus.Readonly,
+    status === FileStatus.Writeable,
+    status === FileStatus.NotFound,
+  ];
+
+  const setJson = (newJson: object, status: FileStatus = FileStatus.Writeable) => {
     if (isDevOnWeb) {
       setState(
         produce(state, (draft) => {
-          draft[fileKey].status = FileStatus.Writeable;
+          draft[fileKey].status = status;
           draft[fileKey].value = newJson;
           if (fileKey === FileKeyEnum.SMBInfo || fileKey === FileKeyEnum.Hypothesis) draft.service.bootingDot = true;
         })
       );
+    } else {
+      send(IPCEnum.UpdateFile, { key: fileKey, json: newJson });
     }
-
-    window.ipcRenderer?.emit(IPCEnum.UpdateFile, { key: fileKey, json: newJson });
   };
 
-  const fileInfo = state[fileKey] as FileItem;
-
   return {
-    status: fileInfo.status,
+    status,
+    isReadonly,
+    isWriteable,
+    notFound,
     json: fileInfo.value as any,
     setJson,
     open: () => send(IPCEnum.OpenFile, fileKey),

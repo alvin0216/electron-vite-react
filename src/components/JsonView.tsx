@@ -10,14 +10,15 @@ interface JsonViewProps {
   setJson: (newJson: object) => void;
   open: () => void;
   sortKeys?: boolean;
+  readonly?: boolean;
 }
 
-const JsonView: React.FC<JsonViewProps> = ({ json, setJson, title, open, fileStatus, sortKeys }) => {
+const JsonView: React.FC<JsonViewProps> = ({ json, setJson, title, open, fileStatus, sortKeys, readonly }) => {
   const Title = () => (
     <Space>
       <Space>
         {title}
-        <span className='c-gray'>({fileStatus})</span>
+        {/* <span className='c-gray'>({fileStatus})</span> */}
       </Space>
       <Tooltip title='open file'>
         <Button
@@ -40,11 +41,11 @@ const JsonView: React.FC<JsonViewProps> = ({ json, setJson, title, open, fileSta
       name={<Title />}
       sortKeys={sortKeys}
       src={json}
-      enableClipboard={false}
       displayDataTypes={false}
-      onEdit={(data) => setJson(data.updated_src)}
-      onAdd={(data) => setJson(data.updated_src)}
-      onDelete={(data) => setJson(data.updated_src)}
+      enableClipboard={!!readonly}
+      onEdit={readonly ? false : (data) => setJson(data.updated_src)}
+      onAdd={readonly ? false : (data) => setJson(data.updated_src)}
+      onDelete={readonly ? false : (data) => setJson(data.updated_src)}
     />
   );
 };

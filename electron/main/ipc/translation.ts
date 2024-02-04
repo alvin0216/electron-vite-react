@@ -1,14 +1,12 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { IPCEnum } from '@constants/enum';
-import { useBridge } from '../utils/bridge';
 import { tranList } from '@constants/tran';
 import fse from 'fs-extra';
 import { MergeRecursive, sortProperties } from '../utils';
 
 export function ipcTranslation(win: BrowserWindow) {
-  const bridge = useBridge(win);
 
-  bridge.handle(IPCEnum.Translate, (args, payload: IPCPayload.Tran) => {
+  ipcMain.handle(IPCEnum.Translate, (args, payload: IPCPayload.Tran) => {
     const { sort, indentation, source, target } = payload;
     let completeList: any[] = [];
     source.map((s) => {

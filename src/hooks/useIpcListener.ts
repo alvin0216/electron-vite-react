@@ -10,14 +10,16 @@ export function useIpcListener() {
   useMount(() => {
     invoke(IPCEnum.ReadFile)
       .then((res) => {
-        // setStore(res);
+        if (res.hypothesis)
+        setStore(res);
       })
       .catch((e) => {
         console.debug(`%c ${IPCEnum.ReadFile} Error:`, 'color: red', e);
       });
 
-    on?.(IPCEnum.OnFileChange, (_event, args) => {
-      setStore(args);
+    on?.(IPCEnum.OnFileChange, (_event, res) => {
+      console.log('OnFileChange', res);
+      setStore(res);
     });
   });
 }
