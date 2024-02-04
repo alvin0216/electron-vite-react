@@ -25,7 +25,7 @@ const Advanced: React.FC<AdvancedProps> = (props) => {
           </Card>
         </Badge.Ribbon>
 
-        <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='Tools' className='w-600'>
+        <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='Announcement' className='w-600'>
           <Space>
             <VantageBin action='start' />
             <VantageBin action='stop' />

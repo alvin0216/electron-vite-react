@@ -16,7 +16,7 @@ export function ipcWatchFiles(win: BrowserWindow) {
       if (path) shell.showItemInFolder(path);
     });
 
-  ipcMain.handle(IPCEnum.ToggleFileStatus, (args, { fileKey, status }) => {
+  ipcMain.handle(IPCEnum.SetFileStatus, (args, { fileKey, status }) => {
     const path = fileWatchMap.get(fileKey);
     if (path) {
       return status === FileStatus.Writeable ? setFileWritable(path) : setFileReadOnly(path);

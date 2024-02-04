@@ -15,8 +15,8 @@ const App: React.FC = () => {
             <sub>Make life lucky and happy</sub>
           </div>
         </div>
-        <Notice />
       </div>
+      <Notice />
       <Widgets />
     </StoreContext.Provider>
   );

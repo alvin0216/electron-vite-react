@@ -7,10 +7,10 @@ export enum IPCEnum {
   GetMD5 = 'GetMD5',
 
   // invoke
-  ChangeServiceStatus = 'ChangeServiceStatus',
+  ServiceBin = 'ServiceBin',
   Errorlog = 'Errorlog',
   Translate = 'Translate',
-  ToggleFileStatus = 'ToggleFileStatus', // Set Hypothesis status - writable readonly
+  SetFileStatus = 'SetFileStatus', // Set Hypothesis status - writable readonly
   ReadPCSetting = 'ReadPCSetting',
   SetGaming = 'SetGaming',
   SetCountry = 'SetCountry',
@@ -48,4 +48,10 @@ export enum PCTypeEnum {
 export enum DisplayEnum {
   En = 'en',
   Zh = 'cn',
+}
+
+export enum SerivceBinAction {
+  Start = 'start',
+  Stop = 'stop',
+  Reboot = 'reboot',
 }

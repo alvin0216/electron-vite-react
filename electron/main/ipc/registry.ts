@@ -1,7 +1,7 @@
 import { IPCEnum, PCTypeEnum } from '@constants/enum';
-import shelljs from 'shelljs';
 import { BrowserWindow, ipcMain } from 'electron';
 
+import shelljs from 'shelljs';
 shelljs.config.execPath = String(shelljs.which('node'));
 
 export function ipcRegistry(win: BrowserWindow) {
@@ -30,7 +30,6 @@ function useRegistry() {
     readPCInfo: () => {
       const str1 = shelljs.exec(cmd.queryGaming, { silent: true }).stdout;
       const str2 = shelljs.exec(cmd.readCountry).stdout;
-
 
       return {
         pcType: str1.match(/(\w+)\r\n/)?.[1] ? PCTypeEnum.Gaming : PCTypeEnum.NotGaming,

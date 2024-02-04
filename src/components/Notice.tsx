@@ -4,8 +4,9 @@ import { Alert, Button } from 'antd';
 interface NoticeProps {}
 
 const Notice: React.FC<NoticeProps> = (props) => {
+  return null;
   return (
-    <div className='ml-16 flex-1 flex flex-row-reverse'>
+    <div className='px-24 my-16'>
       <Alert
         closable
         message='The software version has been updated to xxxx, please download to experience it! '

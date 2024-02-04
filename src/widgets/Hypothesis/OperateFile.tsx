@@ -24,7 +24,7 @@ const OperateFile: React.FC<OperateFileProps> = () => {
   const { run, loading } = useRequest(
     () => {
       const newStatus = isReadonly ? FileStatus.Writeable : FileStatus.Readonly;
-      return invoke(IPCEnum.ToggleFileStatus, {
+      return invoke(IPCEnum.SetFileStatus, {
         fileKey: FileKeyEnum.Hypothesis,
         status: newStatus,
       })
