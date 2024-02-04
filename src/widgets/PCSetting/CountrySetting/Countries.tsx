@@ -1,6 +1,6 @@
 import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core/dist/types/index';
-import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
+import { SortableContext, arrayMove, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import DraggableTag from '@/widgets/PCSetting/CountrySetting/DraggableTag';
 import { usePCSetting } from '@/hooks/usePCSetting';
 

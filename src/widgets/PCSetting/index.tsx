@@ -7,9 +7,6 @@ import { PCSettingContext, useInitialPCSetting } from '@/contexts/PCSettingConte
 
 const PCSetting: React.FC = () => {
   const ctx = useInitialPCSetting();
-  
-  console.log(ctx);
-
 
   return (
     <PCSettingContext.Provider value={ctx as any}>

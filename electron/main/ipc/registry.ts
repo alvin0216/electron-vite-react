@@ -30,7 +30,8 @@ function useRegistry() {
     readPCInfo: () => {
       const str1 = shelljs.exec(cmd.queryGaming, { silent: true }).stdout;
       const str2 = shelljs.exec(cmd.readCountry).stdout;
-      console.log(IPCEnum.ReadPCSetting)
+
+
       return {
         pcType: str1.match(/(\w+)\r\n/)?.[1] ? PCTypeEnum.Gaming : PCTypeEnum.NotGaming,
         countryCode: str2.match(/(\w+)\r\n/)?.[1], // return counrty code

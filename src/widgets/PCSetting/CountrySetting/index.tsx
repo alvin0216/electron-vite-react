@@ -1,10 +1,13 @@
-import { AutoComplete, Button, Select, Space, Tooltip } from 'antd';
+import { Button, Select, Space, Tooltip } from 'antd';
 import { DragOutlined, RedoOutlined } from '@ant-design/icons';
 import Countries from './Countries';
 import { usePCSetting } from '@/hooks/usePCSetting';
+import { useState } from 'react';
 
 const CountrySetting: React.FC = () => {
-  const { displayEn, toggleDisplay, sortable, toggleSortable } = usePCSetting();
+  const { displayEn, toggleDisplay, sortable, toggleSortable, readPCSetting, countryList } = usePCSetting();
+  const [code, setCode] = useState();
+  const options = countryList.map((c) => ({ value: c.id, label: displayEn ? c.en : c.cn }));
 
   return (
     <>
@@ -19,10 +22,17 @@ const CountrySetting: React.FC = () => {
           </Tooltip>
 
           <Tooltip title='Refresh your computer info'>
-            <Button icon={<RedoOutlined />} />
+            <Button icon={<RedoOutlined />} onClick={readPCSetting} />
           </Tooltip>
 
-          <Select allowClear placeholder='Enter country name or abbreviation to filter' className='w-200' />
+          <Select
+            showSearch
+            allowClear
+            placeholder='Set country'
+            className='min-w-260'
+            options={options}
+            onChange={setCode}
+          />
         </Space>
       </div>
       <Countries />

@@ -22,20 +22,19 @@ export function useInitialPCSetting() {
   const displayEn = display === 'en';
   const toggleDisplay = () => setDisplay(displayEn ? 'cn' : 'en');
 
-  const { loading, run, error } = useRequest(async (payload: any) => {
-    const { action, pcType, countryCode } = payload;
+  const { loading, run } = useRequest(async (action = IPCEnum.ReadPCSetting, data?: any) => {
     switch (action) {
+      case IPCEnum.ReadPCSetting:
+        return invoke(IPCEnum.ReadPCSetting).then(setState);
+
       case IPCEnum.SetGaming:
-        return invoke(IPCEnum.SetGaming).then(() => setState({ pcType }));
+        return invoke(IPCEnum.SetGaming, data).then(() => setState({ pcType: data }));
 
       case IPCEnum.SetCountry:
-        return invoke(IPCEnum.SetGaming).then(() => setState({ countryCode }));
+        return invoke(IPCEnum.SetCountry, data).then(() => setState({ countryCode: data }));
 
       default:
-        return invoke(IPCEnum.ReadPCSetting).then((res) => {
-          console.debug('%c 1111', 'color: red', res);
-          setState(res);
-        });
+        return;
     }
   });
 
@@ -48,8 +47,9 @@ export function useInitialPCSetting() {
     countryList,
     setCountryList,
     loading,
-    setGaming: (pcType: PCTypeEnum) => run({ action: IPCEnum.SetGaming, pcType }),
-    setCountry: (countryCode: string) => run({ action: IPCEnum.SetCountry, countryCode }),
+    setGaming: (pcType: PCTypeEnum) => run(IPCEnum.SetGaming, pcType),
+    setCountry: (countryCode: string) => run(IPCEnum.SetCountry, countryCode),
+    readPCSetting: () => run(IPCEnum.ReadPCSetting),
   };
 }
 
@@ -65,6 +65,7 @@ export const PCSettingContext = createContext<{
   setCountryList: (c: CountryItem[]) => void;
   setGaming: (pcType: PCTypeEnum) => void;
   setCountry: (countryCode: string) => void;
+  readPCSetting: () => void;
 }>(
   // @ts-ignore
   null
