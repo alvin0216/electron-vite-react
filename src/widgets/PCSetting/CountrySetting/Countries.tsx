@@ -1,19 +1,13 @@
 import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import type { DragEndEvent } from '@dnd-kit/core/dist/types/index';
 import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
-import countries from '@constants/countries.json';
-import { useState } from 'react';
 import DraggableTag from '@/widgets/PCSetting/CountrySetting/DraggableTag';
+import { usePCSetting } from '@/hooks/usePCSetting';
 
-interface CountriesProps {
-  sortable: boolean;
-  showEn: boolean;
-}
+interface CountriesProps {}
 
-const Countries: React.FC<CountriesProps> = ({ sortable, showEn }) => {
-  const [countryId, setCountryId] = useState('+244');
-  const [items, setItems] = useState<CountryItem[]>(countries); // TODO
-
+const Countries: React.FC<CountriesProps> = () => {
+  const { countryList, setCountryList, countryCode, setCountry } = usePCSetting();
   const sensors = useSensors(useSensor(PointerSensor));
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -21,7 +15,8 @@ const Countries: React.FC<CountriesProps> = ({ sortable, showEn }) => {
     if (!over) return;
 
     if (active.id !== over.id) {
-      setItems((data) => {
+      // @ts-ignore
+      setCountryList((data: CountryItem[]) => {
         const oldIndex = data.findIndex((item) => item.id === active.id);
         const newIndex = data.findIndex((item) => item.id === over.id);
         return arrayMove(data, oldIndex, newIndex);
@@ -30,22 +25,20 @@ const Countries: React.FC<CountriesProps> = ({ sortable, showEn }) => {
   };
 
   const handleChecked = (checkId: string) => {
-    if (countryId !== checkId) {
-      setCountryId(checkId);
+    if (countryCode !== checkId) {
+      setCountry(checkId);
     }
   };
 
   return (
     <div>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
-        <SortableContext items={items} strategy={horizontalListSortingStrategy}>
-          {items.map((item) => (
+        <SortableContext items={countryList} strategy={horizontalListSortingStrategy}>
+          {countryList.map((item) => (
             <DraggableTag
-              sortable={sortable}
-              showEn={showEn}
               item={item}
               key={item.id}
-              checked={countryId === item.id}
+              checked={countryCode === item.id}
               onChange={() => handleChecked(item.id)}
             />
           ))}

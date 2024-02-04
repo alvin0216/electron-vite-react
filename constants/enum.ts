@@ -43,3 +43,8 @@ export enum PCTypeEnum {
   Gaming = 'gaming',
   NotGaming = 'notGaming',
 }
+
+export enum DisplayEnum {
+  En = 'en',
+  Zh = 'cn',
+}

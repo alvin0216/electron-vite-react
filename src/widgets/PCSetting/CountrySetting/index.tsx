@@ -1,18 +1,10 @@
-import { AutoComplete, Button, Select, Space, Tag, Tooltip } from 'antd';
+import { AutoComplete, Button, Select, Space, Tooltip } from 'antd';
 import { DragOutlined, RedoOutlined } from '@ant-design/icons';
-import { useBoolean, useLocalStorageState } from 'ahooks';
 import Countries from './Countries';
-import { StorgeEnum } from '@constants/storage';
+import { usePCSetting } from '@/hooks/usePCSetting';
 
 const CountrySetting: React.FC = () => {
-  const [sortable, { toggle: toggleSortable }] = useBoolean(false);
-
-  const [show, setShow] = useLocalStorageState(StorgeEnum.CountryShow, {
-    defaultValue: 'en',
-  });
-
-  const showEn = show === 'en';
-  const toggleShow = () => setShow(showEn ? 'cn' : 'en');
+  const { displayEn, toggleDisplay, sortable, toggleSortable } = usePCSetting();
 
   return (
     <>
@@ -22,8 +14,8 @@ const CountrySetting: React.FC = () => {
             <Button icon={<DragOutlined />} type={sortable ? 'primary' : 'dashed'} onClick={toggleSortable} />
           </Tooltip>
 
-          <Tooltip title={showEn ? 'English' : '中文（简体）'}>
-            <Button icon={showEn ? 'EN' : '中'} onClick={toggleShow} />
+          <Tooltip title={displayEn ? 'English' : '中文（简体）'}>
+            <Button icon={displayEn ? 'EN' : '中'} onClick={toggleDisplay} />
           </Tooltip>
 
           <Tooltip title='Refresh your computer info'>
@@ -33,7 +25,7 @@ const CountrySetting: React.FC = () => {
           <Select allowClear placeholder='Enter country name or abbreviation to filter' className='w-200' />
         </Space>
       </div>
-      <Countries sortable={sortable} showEn={showEn} />
+      <Countries />
     </>
   );
 };

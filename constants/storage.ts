@@ -5,4 +5,7 @@ export enum StorgeEnum {
   MtmList = 'mtmList',
   SMBFilters = 'smbFilters',
   HypFilters = 'hypFilters',
+
+  CountryDisplay = 'countryDisplay',
+  CountryList = 'countryList',
 }

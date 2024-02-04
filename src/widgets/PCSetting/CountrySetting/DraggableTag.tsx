@@ -1,9 +1,8 @@
+import { usePCSetting } from '@/hooks/usePCSetting';
 import { useSortable } from '@dnd-kit/sortable';
 import { Tag } from 'antd';
 
 type DraggableTagProps = {
-  sortable: boolean;
-  showEn: boolean;
   item: CountryItem;
   checked: boolean;
   onChange?(checked: boolean): void;
@@ -12,9 +11,9 @@ type DraggableTagProps = {
 const { CheckableTag } = Tag;
 
 const DraggableTag: React.FC<DraggableTagProps> = (props) => {
-  const { item, checked, onChange, showEn, sortable } = props;
+  const { sortable, displayEn } = usePCSetting();
+  const { item, checked, onChange } = props;
   const { listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
-
   const commonStyle = { cursor: sortable ? 'move' : 'pointer', transition: 'unset' };
 
   const style = transform
@@ -28,7 +27,7 @@ const DraggableTag: React.FC<DraggableTagProps> = (props) => {
   const _listeners = sortable ? listeners : {};
   return (
     <CheckableTag checked={checked} onChange={onChange} style={style} ref={setNodeRef} {..._listeners}>
-      {showEn ? item.en : item.cn}
+      {displayEn ? item.en : item.cn}
     </CheckableTag>
   );
 };
