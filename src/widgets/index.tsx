@@ -12,6 +12,11 @@ import SSRB from './SSRB';
 
 const items: TabsProps['items'] = [
   {
+    key: 'Translation',
+    label: 'Translation',
+    children: <Translation />,
+  },
+  {
     key: 'SSRB',
     label: 'SSRB',
     children: <SSRB />,
@@ -26,11 +31,7 @@ const items: TabsProps['items'] = [
     label: 'Advanced',
     children: <Advanced />,
   },
-  {
-    key: 'Translation',
-    label: 'Translation',
-    children: <Translation />,
-  },
+  
   {
     key: 'Hypothesis',
     label: 'Hypothesis',

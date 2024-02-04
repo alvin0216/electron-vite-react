@@ -1,5 +1,5 @@
 import React from 'react';
-import { InboxOutlined } from '@ant-design/icons';
+import { InboxOutlined, PaperClipOutlined } from '@ant-design/icons';
 import { Upload } from 'antd';
 import { UploadFile } from 'antd/lib';
 import { CheckOutlined } from '@ant-design/icons';
@@ -24,9 +24,7 @@ const Vuploader: React.FC<Vuploader> = ({
     accept='.json'
     fileList={value}
     onChange={({ fileList }) => onChange?.(fileList)}
-    iconRender={(f) => {
-      return <CheckOutlined style={{ color: '#52c41a' }} />;
-    }}
+    iconRender={(f) => (f.status === 'done' ? <CheckOutlined style={{ color: '#52c41a' }} /> : <PaperClipOutlined />)}
     beforeUpload={() => false}>
     <p className='ant-upload-drag-icon'>
       <InboxOutlined />

@@ -1,34 +1,34 @@
-import { BrowserWindow } from 'electron';
-import { FileKeyEnum, FileStatus, IPCEnum } from '@constants/enum';
+import { BrowserWindow, ipcMain } from 'electron';
+import { IPCEnum } from '@constants/enum';
 import { useBridge } from '../utils/bridge';
-import { tranMap } from '@constants/tran';
+import { tranList } from '@constants/tran';
 import fse from 'fs-extra';
 import { MergeRecursive, sortProperties } from '../utils';
 
-export function ipcWatchFiles(win: BrowserWindow) {
+export function ipcTranslation(win: BrowserWindow) {
   const bridge = useBridge(win);
 
   bridge.handle(IPCEnum.Translate, (args, payload: IPCPayload.Tran) => {
     const { sort, indentation, source, target } = payload;
-    // Object.keys(tranMap);
-
+    let completeList: any[] = [];
     source.map((s) => {
-      const key = s.name.toUpperCase().replace('.JSON', '');
-      // @ts-ignore
-      const match: string[] = tranMap[key] || [];
       const sourceFilePath = s.path;
-      const targetFilePath = target.find((t) => match.some((m) => m === t.name))?.path;
-      if (targetFilePath) {
-        // ...
-        const [sourceJson, targetJson] = [fse.readJSONSync(sourceFilePath), fse.readJSONSync(targetFilePath)];
-        let resultJson = JSON.parse(JSON.stringify(sourceJson));
-        MergeRecursive(resultJson, targetJson);
-        if (sort) resultJson = sortProperties(target);
-
-        fse.writeJSONSync(targetFilePath, target, { spaces: indentation });
+      const sourceFileName = s.name.toLowerCase();
+      const items = tranList.find((items) => items.includes(sourceFileName));
+      // find target
+      if (items) {
+        const targetFilePath = target.find((t) => items.includes(t.name.toLowerCase()))?.path;
+        if (targetFilePath) {
+          const [sourceJson, targetJson] = [fse.readJSONSync(sourceFilePath), fse.readJSONSync(targetFilePath)];
+          let resultJson = JSON.parse(JSON.stringify(targetJson));
+          MergeRecursive(sourceJson, resultJson);
+          if (sort) resultJson = sortProperties(resultJson);
+          fse.writeJSONSync(targetFilePath, resultJson, { spaces: Number(indentation) });
+          completeList.push({ sourceFilePath, targetFilePath });
+        }
       }
     });
 
-    return true;
+    return completeList;
   });
 }

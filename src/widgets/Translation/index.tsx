@@ -1,8 +1,10 @@
-import { ProForm, ProFormRadio, ProFormSwitch } from '@ant-design/pro-components';
+import { ProForm, ProFormInstance, ProFormRadio, ProFormSwitch } from '@ant-design/pro-components';
 import { Col, Row, Space } from 'antd';
-import { IndentationEnum } from '@constants/enum';
+import { IPCEnum, IndentationEnum } from '@constants/enum';
 import { UploadFile } from 'antd/lib';
 import Vuploader from '@/components/Vuploader';
+import { useIpc } from '@/hooks/useIpc';
+import { useRef } from 'react';
 
 interface Fields {
   source: UploadFile[];
@@ -11,19 +13,49 @@ interface Fields {
   sort: boolean;
 }
 
+interface ResultItem {
+  sourceFilePath: string;
+  targetFilePath: string;
+}
+
 const Translation = () => {
+  const { invoke } = useIpc();
+
+  const formRef = useRef<ProFormInstance>();
+
+  const handleSubmit = async (v: Fields) => {
+    const [source, target] = [
+      v.source?.map((f) => ({ name: f.name, path: f.originFileObj?.path })),
+      v.target?.map((f) => ({ name: f.name, path: f.originFileObj?.path })),
+    ];
+
+    const result: ResultItem[] = await invoke(IPCEnum.Translate, {
+      source,
+      target,
+      indentation: v.indentation,
+      sort: v.sort,
+    });
+
+    formRef.current?.setFieldsValue({
+      source: v.source.map((s) => ({
+        ...s,
+        status: result.some((r) => r.sourceFilePath === s.originFileObj?.path) ? 'done' : s.status,
+      })),
+      target: v.target.map((t) => ({
+        ...t,
+        status: result.some((r) => r.targetFilePath === t.originFileObj?.path) ? 'done' : t.status,
+      })),
+    });
+    
+    return true;
+  };
+
   return (
     <ProForm<Fields>
       layout='horizontal'
+      formRef={formRef}
       initialValues={{ indentation: '2', sort: true }}
-      onFinish={async (v) => {
-        const [source, target] = [
-          v.source?.map((f) => ({ name: f.name, path: f.originFileObj?.path })),
-          v.target?.map((f) => ({ name: f.name, path: f.originFileObj?.path })),
-        ];
-        console.log('submit', { source, target, indentation: v.indentation, sort: v.sort });
-        return false;
-      }}>
+      onFinish={handleSubmit}>
       <Row gutter={24}>
         <Col span={12}>
           <ProForm.Item name='source'>
