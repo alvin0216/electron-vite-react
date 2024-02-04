@@ -1,4 +1,4 @@
-import { AutoComplete, Button, Space, Tag, Tooltip } from 'antd';
+import { AutoComplete, Button, Select, Space, Tag, Tooltip } from 'antd';
 import { DragOutlined, RedoOutlined } from '@ant-design/icons';
 import { useBoolean, useLocalStorageState } from 'ahooks';
 import Countries from './Countries';
@@ -30,7 +30,7 @@ const CountrySetting: React.FC = () => {
             <Button icon={<RedoOutlined />} />
           </Tooltip>
 
-          <AutoComplete allowClear placeholder='Enter country name or abbreviation to filter' className='w-200' />
+          <Select allowClear placeholder='Enter country name or abbreviation to filter' className='w-200' />
         </Space>
       </div>
       <Countries sortable={sortable} showEn={showEn} />

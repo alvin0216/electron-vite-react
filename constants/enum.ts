@@ -3,13 +3,16 @@ export enum IPCEnum {
   UpdateFile = 'UpdateFile',
   OpenFile = 'OpenFile',
   OnFileChange = 'OnFileChange',
-  // Set Hypothesis status - writable readonly
-  ToggleFileStatus = 'ToggleFileStatus',
+  OpenDevTools = 'OpenDevTools',
 
   // invoke
   ChangeServiceStatus = 'ChangeServiceStatus',
   Errorlog = 'Errorlog',
   Translate = 'Translate',
+  ToggleFileStatus = 'ToggleFileStatus', // Set Hypothesis status - writable readonly
+  ReadPCSetting = 'ReadPCSetting',
+  SetGaming = 'SetGaming',
+  SetCountry = 'SetCountry',
 }
 
 // ....
@@ -34,4 +37,9 @@ export enum AppTypeEnum {
 export enum IndentationEnum {
   Two = 2,
   Four = 4,
+}
+
+export enum PCTypeEnum {
+  Gaming = 'gaming',
+  NotGaming = 'notGaming',
 }

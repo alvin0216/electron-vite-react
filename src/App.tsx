@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <StoreContext.Provider value={ctx!}>
       <div className='flex px-24 pt-24 items-center text-16'>
-        <img src={logo} className='w-60px text-center align-middle' />
+        <img src={logo} className='w-60px text-center align-middle' alt='' />
         <div className='pl-16 font-500 subpixel-antialiased'>
           Lenovo Vantage
           <div className='c-gray'>
