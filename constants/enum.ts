@@ -4,6 +4,7 @@ export enum IPCEnum {
   OpenFile = 'OpenFile',
   OnFileChange = 'OnFileChange',
   OpenDevTools = 'OpenDevTools',
+  GetMD5 = 'GetMD5',
 
   // invoke
   ChangeServiceStatus = 'ChangeServiceStatus',

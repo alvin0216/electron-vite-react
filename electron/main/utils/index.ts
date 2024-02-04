@@ -1,3 +1,6 @@
+import crypto from 'crypto';
+import fse from 'fs-extra';
+
 /** 合并对象，target 对象会被修改 */
 export function MergeRecursive(source: any, target: any) {
   for (const p in source) {
@@ -21,4 +24,10 @@ export function sortProperties(obj: object) {
     });
 
   return o;
+}
+
+export function generateSha256(filePath: string) {
+  const hash = crypto.createHash('sha256'); // sha256或者md5
+  const content = fse.readFileSync(filePath);
+  return hash.update(content).digest('hex');
 }
