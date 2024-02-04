@@ -5,10 +5,11 @@ import { usePCSetting } from '@/hooks/usePCSetting';
 import { useState } from 'react';
 
 const CountrySetting: React.FC = () => {
-  const { displayEn, toggleDisplay, sortable, toggleSortable, readPCSetting, countryList } = usePCSetting();
-  const [code, setCode] = useState();
+  const { displayEn, toggleDisplay, sortable, toggleSortable, readPCSetting, countryList, setCountry } = usePCSetting();
   const options = countryList.map((c) => ({ value: c.id, label: displayEn ? c.en : c.cn }));
-
+  const filterOption = (input: string, option?: { label: string; value: string }) =>
+    (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+    
   return (
     <>
       <div className='mb-6'>
@@ -31,7 +32,10 @@ const CountrySetting: React.FC = () => {
             placeholder='Set country'
             className='min-w-260'
             options={options}
-            onChange={setCode}
+            filterOption={filterOption}
+            onChange={(code) => {
+              if (code) setCountry(code);
+            }}
           />
         </Space>
       </div>
