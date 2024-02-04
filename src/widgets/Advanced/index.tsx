@@ -13,7 +13,7 @@ const Advanced: React.FC<AdvancedProps> = (props) => {
       }}
       className='absolute top-0 left-0 py-24 w-full'>
       <Space className='px-24' wrap align='baseline' size='large'>
-        <Badge.Ribbon text={`Vantage Dev Tools v${1.5}`} color='magenta'>
+        <Badge.Ribbon text={`Vantage Dev Tools v${APP_VERSION}`} color='magenta'>
           <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='Announcement' className='w-600'>
             {/* ... */}
             <div>

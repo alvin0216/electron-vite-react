@@ -77,6 +77,9 @@ export default defineConfig(({ command, mode }) => {
             renderer: {},
           }),
     ],
+    define: {
+      APP_VERSION: JSON.stringify(process.env.npm_package_version),
+    },
     server:
       process.env.VSCODE_DEBUG &&
       (() => {
