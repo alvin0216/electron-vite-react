@@ -1,7 +1,7 @@
 import { useIpc } from '@/hooks/useIpc';
 import { FileAddOutlined, FolderAddOutlined } from '@ant-design/icons';
 import { IPCEnum } from '@constants/enum';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 
 interface ProFormFolderProps {
   value?: string;
@@ -23,7 +23,7 @@ export const FolderSelector: React.FC<ProFormFolderProps> = (props) => {
       <Button icon={<FolderAddOutlined />} onClick={handleClick}>
         Select repo folder
       </Button>
-      <div className='ant-form-item-extra'>{value}</div>
+      {value && <div className='ant-form-item-extra'>{value}</div>}
     </>
   );
 };
@@ -34,7 +34,9 @@ export const FileSelector: React.FC<ProFormFolderProps> = (props) => {
 
   const handleClick = () => {
     invoke(IPCEnum.SelectPackageJson).then((path) => {
-      path && onChange?.(path);
+      if (path) {
+        path.endsWith('package.json') ? onChange?.(path) : message.warning('Please select your repo package.json');
+      }
     });
   };
 
@@ -43,7 +45,7 @@ export const FileSelector: React.FC<ProFormFolderProps> = (props) => {
       <Button icon={<FileAddOutlined />} onClick={handleClick}>
         Select package.json
       </Button>
-      <div className='ant-form-item-extra'>{value}</div>
+      {value && <div className='ant-form-item-extra'>{value}</div>}
     </>
   );
 };

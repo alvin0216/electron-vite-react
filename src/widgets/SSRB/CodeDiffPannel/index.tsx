@@ -1,29 +1,27 @@
 import { Descriptions } from 'antd';
 import CodeDiffForm from './CodeDiffForm';
+import Terminal from './Terminal';
 
 interface CodeDiffProps {}
 
 const CodeDiff: React.FC<CodeDiffProps> = () => {
   return (
     <Descriptions
+      layout='vertical'
       bordered
       className='w-full overscroll-x-auto'
-      column={1}
+      column={2}
       items={[
         {
-          key: '1',
-          label: 'UserName',
+          key: 'repo',
+          label: 'Repo path',
           children: <CodeDiffForm />,
         },
-        {
-          key: '2',
-          label: 'Telephone',
-          children: <p>1810000000</p>,
-        },
+
         {
           key: '3',
           label: 'Live',
-          children: <p>Hangzhou, Zhejiang</p>,
+          children: <Terminal />,
         },
         {
           key: '4',

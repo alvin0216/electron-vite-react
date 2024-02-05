@@ -1,41 +1,76 @@
 import { FileSelector, FolderSelector } from '@/components/FileFolderSelector';
 import { useRepo } from '@/hooks/useRepo';
 import { ProForm, ProFormDependency, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { Button, Spin } from 'antd';
-import { useRef, useState } from 'react';
+import { Button, Spin, Typography } from 'antd';
+import { useMemo, useRef, useState } from 'react';
 
-interface CodeDiffFormProps {}
-const template = 'cd [repo]\ngit diff [tagA] [tagB] -- [excludePattern] > [repoName]-[v1]-[v2].diff';
+const { Paragraph } = Typography;
 
-const CodeDiffForm: React.FC<CodeDiffFormProps> = () => {
-  const [path, setPath] = useState<string>();
-  const { getRepoInfo, repoInfo, loading } = useRepo();
+const CodeDiffForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>();
+  const { getRepoInfo, repoInfo, loading } = useRepo();
+
+  const [state, setState] = useState<Partial<CodeDiffFields>>({
+    repoPath: 'sss',
+    packageJsonPath: 'dddd',
+    prevBranch: undefined,
+    nextBranch: undefined,
+    prevVersion: undefined,
+    nextVersion: undefined,
+    excludePattern: '":!package-lock.json"',
+  });
+
   const options = repoInfo?.branches.map?.((b) => ({ value: b.name, label: `${b.name} (${b.version})` }));
 
+  const onValuesChange = (val: any, allValues: Partial<CodeDiffFields>) => {
+    setState((prev) => ({ ...prev, ...allValues }));
+  };
+
+  const { cmd } = useMemo(() => {
+    const prevVersion = repoInfo?.branches.find((b) => state.prevBranch === b.name)?.version || state.prevVersion;
+    const nextVersion = repoInfo?.branches.find((b) => state.nextBranch === b.name)?.version || state.nextVersion;
+    const template =
+      'git diff [prevBranch] [nextBranch] -- [excludePattern] > [repoName]-v[prevVersion]-v[nextVersion].diff';
+
+    const cmd = template
+      .replace('[repoPath]', state.repoPath || '[repoPath]')
+      .replace('[prevBranch]', state.prevBranch || '[prevBranch]')
+      .replace('[nextBranch]', state.nextBranch || '[nextBranch]')
+      .replace('[excludePattern]', state.excludePattern || '[excludePattern]')
+      .replace('[repoName]', state.repoName || '[repoName]')
+      .replace('[prevVersion]', prevVersion || '[prevVersion]')
+      .replace('[nextVersion]', nextVersion || '[nextVersion]');
+    return { prevVersion, nextVersion, cmd };
+  }, [repoInfo, state]);
+
+  const fetchRepoAccess = !!(state.repoPath && state.packageJsonPath);
+
   return (
-    <Spin spinning={loading}>
-      <pre>
-        <code>{template}</code>
-      </pre>
-      {path}
+    <>
+      <Paragraph style={{ maxWidth: 440, marginTop: 24 }} copyable code>
+        <div>cd {state.repoPath}</div>
+        <span>{cmd}</span>
+      </Paragraph>
       <ProForm
+        initialValues={state}
         layout='horizontal'
         formRef={formRef}
-        onValuesChange={(v) => {
-          console.log('change', v);
-        }}
+        onValuesChange={onValuesChange}
         submitter={{
           render: (props, doms) => {
             return [
               ...doms,
-              <Button key={path ? 'x' : 'b'} type='primary' onClick={() => getRepoInfo(path!)} disabled={!path}>
+              <Button
+                key='refresh'
+                type='primary'
+                onClick={() => getRepoInfo(state.repoPath!)}
+                disabled={!fetchRepoAccess}>
                 Refresh Repo Info
               </Button>,
             ];
           },
         }}>
-        <ProForm.Item label='Repo' name='repo'>
+        <ProForm.Item label='Repo Path' name='repoPath'>
           <FolderSelector />
         </ProForm.Item>
 
@@ -43,12 +78,12 @@ const CodeDiffForm: React.FC<CodeDiffFormProps> = () => {
           <FileSelector />
         </ProForm.Item>
 
-        <ProFormDependency name={['repo']}>
-          {({ repo }) => {
+        <ProFormDependency name={['repoPath', 'packageJsonPath']}>
+          {({ repoPath }) => {
             return (
               <>
-                <ProFormSelect label='Prev' name='tagB' options={options} />
-                <ProFormSelect label='Next' name='tagA' options={options} />
+                <ProFormSelect label='Prev Branch' name='prevBranch' options={options} />
+                <ProFormSelect label='Next Branch' name='nextBranch' options={options} />
                 <ProFormText label='ExcludePattern' name='excludePattern' />
                 <ProFormText label='RepoName' name='repoName' />
               </>
@@ -56,7 +91,7 @@ const CodeDiffForm: React.FC<CodeDiffFormProps> = () => {
           }}
         </ProFormDependency>
       </ProForm>
-    </Spin>
+    </>
   );
 };
 

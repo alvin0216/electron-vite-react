@@ -18,8 +18,6 @@ export enum IPCEnum {
   ReadPCSetting = 'ReadPCSetting',
   SetGaming = 'SetGaming',
   SetCountry = 'SetCountry',
-
-  OpenDirectory = 'OpenDirectory',
 }
 
 // ....

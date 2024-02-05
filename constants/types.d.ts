@@ -7,6 +7,17 @@ declare namespace IPCPayload {
   }
 }
 
-declare interface Repo {
+declare interface RepoInfo {
   branches: { name: string; version: string }[];
+}
+
+declare interface CodeDiffFields {
+  repoPath: string;
+  repoName: string;
+  packageJsonPath: string;
+  prevBranch: string;
+  nextBranch: string;
+  prevVersion: string;
+  nextVersion: string;
+  excludePattern: string;
 }
