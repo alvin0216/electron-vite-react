@@ -16,3 +16,15 @@ html {
   height: 100%;
   overflow: auto;
 }
+
+.pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  color: rgba(42, 46, 54, 0.65);
+  font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  background-color: rgba(150, 150, 150, 0.1);
+  border-radius: 3px;
+  width: min-content;
+}

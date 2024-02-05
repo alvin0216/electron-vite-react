@@ -21,3 +21,5 @@ declare interface CodeDiffFields {
   nextVersion: string;
   excludePattern: string;
 }
+
+declare type PartialCodeDiffFields = Partial<CodeDiffFields>;

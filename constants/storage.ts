@@ -7,5 +7,5 @@ export enum StorgeEnum {
   CountryDisplay = 'countryDisplay',
   CountryList = 'countryList',
   TabKey = 'tabKey',
-  SSRB = 'ssrb',
+  CodeDiffFields = 'codeDiffFields',
 }
