@@ -1,68 +1,43 @@
-import React, { useMemo, useState } from 'react';
-import { ProDescriptions } from '@ant-design/pro-components';
-import PannelRight from '@/widgets/CommandTools/PannelRight';
-import DynamicStrForm from '@/components/DynamicStrForm';
-import { Button } from 'antd';
+import { Descriptions } from 'antd';
+import CodeDiffForm from './CodeDiffForm';
 
-const template = 'cd [repo]\ngit diff [tagA] [tagB] -- . ":!package.json" > [repo]/[v1]-[v2].diff';
-const CodeDiffPannel: React.FC = () => {
-  const [vars, setVars] = useState({});
+interface CodeDiffProps {}
 
-  const execStr = useMemo(() => {
-    let execStr = template;
-    Object.entries(vars).forEach(([key, value]) => {
-      // @ts-ignore
-      execStr = execStr.split(key).join(value);
-    });
-    return execStr;
-  }, [template, vars]);
-
+const CodeDiff: React.FC<CodeDiffProps> = () => {
   return (
-    <ProDescriptions
+    <Descriptions
+      bordered
       className='w-full overscroll-x-auto'
       column={1}
-      bordered
-      dataSource={{
-        template,
-        variables: {},
-        execStr,
-      }}
-      columns={[
+      items={[
         {
-          title: 'Terminal Template',
-          dataIndex: 'template',
-          copyable: true,
-          editable: false,
-          valueType: 'jsonCode',
+          key: '1',
+          label: 'UserName',
+          children: <CodeDiffForm />,
         },
-
         {
-          title: 'ExecStr',
-          dataIndex: 'execStr',
-          copyable: true,
-          editable: false,
-          valueType: 'code',
-          renderText: (text) => execStr,
+          key: '2',
+          label: 'Telephone',
+          children: <p>1810000000</p>,
         },
-
         {
-          title: 'Environment variables',
-          dataIndex: 'variables',
-          render: (text, row) => {
-            return <DynamicStrForm template={row.template} value={vars} onChange={setVars} />;
-          },
+          key: '3',
+          label: 'Live',
+          children: <p>Hangzhou, Zhejiang</p>,
         },
-
         {
-          title: 'Action',
-          dataIndex: 'action',
-          render: (text, row) => {
-            return <Button type='primary'>Run</Button>;
-          },
+          key: '4',
+          label: 'Remark',
+          children: <p>empty</p>,
+        },
+        {
+          key: '5',
+          label: 'Address',
+          children: <p>No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China</p>,
         },
       ]}
     />
   );
 };
 
-export default CodeDiffPannel;
+export default CodeDiff;

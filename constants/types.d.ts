@@ -6,3 +6,7 @@ declare namespace IPCPayload {
     sort: boolean;
   }
 }
+
+declare interface Repo {
+  branches: { name: string; version: string }[];
+}

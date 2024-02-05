@@ -35,7 +35,8 @@
     "fs-extra": "^11.2.0",
     "immer": "^10.0.3",
     "react-json-view": "^1.21.3",
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.8.5",
+    "simple-git": "^3.22.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.37.1",

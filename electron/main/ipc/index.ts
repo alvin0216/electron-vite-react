@@ -4,12 +4,14 @@ import { ipcWatchFiles } from './file-watch';
 import { ipcTranslation } from './translation';
 import { ipcRegistry } from './registry';
 import { ipcExec } from './exec';
+import { ipcSSRB } from './ssrb';
 
 export function ipcHandler(win: BrowserWindow) {
   ipcWatchFiles(win);
-  ipcTranslation(win);
   ipcRegistry(win);
   ipcExec();
+  ipcSSRB();
+  ipcTranslation(win);
 
   ipcMain.on(IPCEnum.OpenDevTools, () => win.webContents.openDevTools());
 
