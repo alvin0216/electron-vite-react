@@ -1,7 +1,7 @@
 import { IPCEnum, SerivceBinAction } from '@constants/enum';
 import { ipcMain } from 'electron';
 import { simpleGit } from 'simple-git';
-import { generateSha256 } from '../utils';
+import { generateSha256, selectFolder, selectPackageJson } from '../utils';
 import fse from 'fs-extra';
 
 export function ipcSSRB() {
@@ -10,6 +10,9 @@ export function ipcSSRB() {
   ipcMain.handle(IPCEnum.GetRepoInfo, (arg, repoPath) => getRepoInfo(repoPath));
 
   ipcMain.handle(IPCEnum.RunCodeDiff, (arg, repoPath) => getRepoInfo(repoPath));
+
+  ipcMain.handle(IPCEnum.SelectFolder, () => selectFolder());
+  ipcMain.handle(IPCEnum.SelectPackageJson, () => selectPackageJson());
 }
 
 async function getRepoInfo(packageJsonPath: string) {
@@ -27,7 +30,7 @@ async function getRepoInfo(packageJsonPath: string) {
     )
   );
 
-  console.log(111, result)
+  console.log(111, result);
 
   return { branches: result };
 }

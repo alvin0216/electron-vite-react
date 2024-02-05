@@ -1,13 +1,6 @@
+import { FileSelector, FolderSelector } from '@/components/FileFolderSelector';
 import { useRepo } from '@/hooks/useRepo';
-import {
-  ProForm,
-  ProFormDependency,
-  ProFormField,
-  ProFormInstance,
-  ProFormSelect,
-  ProFormText,
-  ProFormUploadDragger,
-} from '@ant-design/pro-components';
+import { ProForm, ProFormDependency, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Button, Spin } from 'antd';
 import { useRef, useState } from 'react';
 
@@ -42,19 +35,13 @@ const CodeDiffForm: React.FC<CodeDiffFormProps> = () => {
             ];
           },
         }}>
-        <ProFormUploadDragger
-          label='Repo'
-          name='repo'
-          accept='.json'
-          max={1}
-          fieldProps={{
-            beforeUpload: () => false,
-            onChange: ({ file, fileList }) => {
-              setPath(fileList[0]?.originFileObj?.path);
-            },
-          }}
-          extra='Please'
-        />
+        <ProForm.Item label='Repo' name='repo'>
+          <FolderSelector />
+        </ProForm.Item>
+
+        <ProForm.Item label='PackageJson' name='packageJsonPath'>
+          <FileSelector />
+        </ProForm.Item>
 
         <ProFormDependency name={['repo']}>
           {({ repo }) => {

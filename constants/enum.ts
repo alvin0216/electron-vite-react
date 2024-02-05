@@ -7,7 +7,8 @@ export enum IPCEnum {
   GetMD5 = 'GetMD5',
   GetRepoInfo = 'GetRepoInfo',
   RunCodeDiff = 'RunCodeDiff',
-
+  SelectFolder = 'SelectFolder',
+  SelectPackageJson = 'SelectPackageJson',
 
   // invoke
   ServiceBin = 'ServiceBin',
