@@ -13,4 +13,6 @@ export const resourcePath = {
   testBench: 'http://10.176.33.41/enm/vantage30/TestBench/',
   // ...........
   releaseHelper: 'https://confluence.tc.lenovo.com/display/CT/Build%2C+Deploy%2C+SSRB+and+Release',
+
+  releaseJson: 'https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/devToolsRelease.json',
 };

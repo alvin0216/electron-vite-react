@@ -30,3 +30,8 @@ declare interface CodeDiffFields {
 }
 
 declare type PartialCodeDiffFields = Partial<CodeDiffFields>;
+
+declare interface ReleaseInfo {
+  version: string;
+  downloadUrl: string;
+}
