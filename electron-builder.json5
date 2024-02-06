@@ -23,11 +23,5 @@
     artifactName: '${productName}-v${version}.${ext}',
     icon: 'public/logo.png',
     requestedExecutionLevel: 'requireAdministrator',
-  },
-  nsis: {
-    oneClick: false,
-    perMachine: false,
-    allowToChangeInstallationDirectory: true,
-    deleteAppDataOnUninstall: false,
   }
 }
