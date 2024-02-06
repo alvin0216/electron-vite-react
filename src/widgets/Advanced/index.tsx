@@ -1,6 +1,8 @@
 import VantageBin from '@/components/VantageBin';
-import { Badge, Button, Card, Space } from 'antd';
+import { Avatar, Badge, Button, Card, Space } from 'antd';
 import LinkList from './LinkList';
+import UserProfile from './UserProfile';
+import Announcement from './Announcement';
 
 interface AdvancedProps {}
 
@@ -13,18 +15,7 @@ const Advanced: React.FC<AdvancedProps> = (props) => {
       }}
       className='absolute top-0 left-0 py-24 w-full'>
       <Space className='px-24' wrap align='baseline' size='large'>
-        <Badge.Ribbon text={`Vantage Dev Tools v${APP_VERSION}`} color='magenta'>
-          <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='Announcement' className='w-600'>
-            {/* ... */}
-            <div>
-              Author:
-              <Button href='mailto:guosw5@lenovo.com?subject=Vantage Dev Tools Suggestions' type='link'>
-                guosw5@lenovo.com
-              </Button>
-            </div>
-            <LinkList />
-          </Card>
-        </Badge.Ribbon>
+        <Announcement />
 
         <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='VantageBin' className='w-600'>
           <Space>
@@ -32,6 +23,10 @@ const Advanced: React.FC<AdvancedProps> = (props) => {
             <VantageBin action='start' />
             <VantageBin action='reboot' />
           </Space>
+        </Card>
+
+        <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='User Profile' className='w-600'>
+          <UserProfile />
         </Card>
       </Space>
     </div>
