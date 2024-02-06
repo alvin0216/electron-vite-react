@@ -6,13 +6,10 @@ import fse from 'fs-extra';
 
 export function ipcSSRB() {
   ipcMain.handle(IPCEnum.GetMD5, (arg, path) => generateSha256(path));
-
   ipcMain.handle(IPCEnum.GetRepoInfo, (arg, repoPath) => getRepoInfo(repoPath));
-
-  ipcMain.handle(IPCEnum.RunCodeDiff, (arg, repoPath) => getRepoInfo(repoPath));
-
   ipcMain.handle(IPCEnum.SelectFolder, () => selectFolder());
   ipcMain.handle(IPCEnum.SelectPackageJson, () => selectPackageJson());
+  ipcMain.handle(IPCEnum.RunCodeDiff, (arg, cdFields: IPCPayload.CodeDiff) => runCodeDiff(cdFields));
 }
 
 async function getRepoInfo(packageJsonPath: string) {
@@ -37,25 +34,19 @@ async function getRepoInfo(packageJsonPath: string) {
 
 // ...
 
-async function runCodeDiff() {
-  const repoPath = 'C:\\Users\\guosw5\\Desktop\\codes\\ui-consumer\\';
-  const packageJsonPath = 'C:\\Users\\guosw5\\Desktop\\codes\\ui-consumer\\packages\\vantage-ui-consumer';
+async function runCodeDiff(cdFields: IPCPayload.CodeDiff) {
+  const { repoPath, repoName, filename, prevBranch, nextBranch, prevVersion, nextVersion, excludePattern } = cdFields;
 
-  const next = 'release/vantage2401';
-  const prev = 'release/vantage2311';
-
-  const excludePattern = ':!package-lock.json';
+  const fileName = filename || `${repoName}-v${prevVersion}-${nextVersion}.diff`;
 
   const git = simpleGit(repoPath);
-  const diffText = await git.diff(!excludePattern ? [next, prev] : [next, prev, '--', excludePattern]);
+  const diffText = await git.diff(
+    !excludePattern
+      ? [nextBranch, prevBranch, '>', fileName]
+      : [nextBranch, prevBranch, '--', excludePattern, '>', fileName]
+  );
   const diffLine = diffText.split('\n').length;
+  fse.writeFileSync(fileName, diffText);
 
-  // const size = useMemo(() => {
-  //   if (diffLen < 1000) return "Small";
-  //   else if (diffLen < 10000) return "Medium";
-  //   return "Large";
-  // }, [diffLen]);
-
-  fse.writeFileSync(`${repoPath}/b.diff`, diffText);
   return { diffLine };
 }

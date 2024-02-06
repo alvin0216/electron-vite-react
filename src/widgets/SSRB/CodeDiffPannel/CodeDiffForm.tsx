@@ -33,9 +33,9 @@ const CodeDiffForm: React.FC = () => {
         });
       }}
       submitter={{
-        render: (props, doms) => {
+        render: (props, [reset, submit]) => {
           return [
-            ...doms,
+            reset,
             <Button
               key='refresh'
               type='primary'
@@ -44,6 +44,7 @@ const CodeDiffForm: React.FC = () => {
               loading={fetchingRepoInfo}>
               Refresh Repo Info
             </Button>,
+            submit,
           ];
         },
       }}>

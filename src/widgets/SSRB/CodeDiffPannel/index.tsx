@@ -2,6 +2,7 @@ import { Descriptions } from 'antd';
 import CodeDiffForm from './CodeDiffForm';
 import Terminal from './Terminal';
 import { CodeDiffContext, useInitialCodeDiffCtx } from '@/contexts/CodeDiffContext';
+import DiffResult from './DiffResult';
 
 interface CodeDiffProps {}
 
@@ -17,18 +18,23 @@ const CodeDiff: React.FC<CodeDiffProps> = () => {
         column={2}
         items={[
           {
-            key: 'repo',
+            key: 'Options',
             label: 'Options',
             children: <CodeDiffForm />,
             span: 1,
           },
 
           {
-            key: '3',
+            key: 'Command',
             label: 'Command',
             style: { display: 'flex' },
             children: <Terminal />,
             span: 1,
+          },
+          {
+            key: 'Result',
+            label: 'Result',
+            children: <DiffResult />,
           },
         ]}
       />

@@ -1,5 +1,5 @@
-import { createContext, useMemo } from 'react';
-import { useLocalStorageState, useRequest } from 'ahooks';
+import { createContext, useEffect, useMemo } from 'react';
+import { useLocalStorageState, useRequest, useSetState } from 'ahooks';
 import { StorgeEnum } from '@constants/storage';
 import { IPCEnum } from '@constants/enum';
 import { useIpc } from '@/hooks/useIpc';
@@ -18,10 +18,10 @@ export const cdFieldsDefaultValues: PartialCodeDiffFields = {
 
 export function useInitialCodeDiffCtx() {
   const { invoke } = useIpc();
-
   const template =
     'git diff [prevBranch] [nextBranch] -- [excludePattern] > [repoName]-v[prevVersion]-v[nextVersion].diff';
 
+  const [{ diffLine }, setState] = useSetState({ diffLine: 0 });
   const [cdFields, setCDFields] = useLocalStorageState<PartialCodeDiffFields>(StorgeEnum.CodeDiffFields, {
     defaultValue: cdFieldsDefaultValues,
   });
@@ -40,7 +40,7 @@ export function useInitialCodeDiffCtx() {
   const branchOptions = repoInfo?.branches.map?.((b) => ({ value: b.name, label: `${b.name} (${b.version})` }));
   const fetchRepoAccess = !!(cdFields?.repoPath && cdFields?.packageJsonPath);
 
-  const { cmd } = useMemo(() => {
+  const { cmd, filename } = useMemo(() => {
     const prevVersion =
       repoInfo?.branches.find((b) => cdFields?.prevBranch === b.name)?.version || cdFields?.prevVersion;
     const nextVersion =
@@ -54,19 +54,49 @@ export function useInitialCodeDiffCtx() {
       .replace('[repoName]', cdFields?.repoName || '[repoName]')
       .replace('[prevVersion]', prevVersion || '[prevVersion]')
       .replace('[nextVersion]', nextVersion || '[nextVersion]');
-    return { prevVersion, nextVersion, cmd };
+
+    const filename = cmd.split(' > ')[1];
+
+    return { prevVersion, nextVersion, cmd, filename };
   }, [repoInfo, cdFields]);
 
-  const run = () => {
-    return invoke(IPCEnum.RunCodeDiff, cdFields);
+  const run = async () => {
+    const { diffLine } = await invoke(IPCEnum.RunCodeDiff, { ...cdFields, filename });
+    setState({ diffLine });
+    return true;
   };
 
-  return { cmd, branchOptions, fetchRepoAccess, fetchingRepoInfo, getRepoInfo, cdFields, setCDFields, template, run };
+  const getTag = (diffLine: number) => {
+    if (diffLine < 1000) return 'Small';
+    else if (diffLine < 10000) return 'Medium';
+    return 'Large';
+  };
+
+  const diffSize = useMemo(() => {
+    if (diffLine < 1000) return 'Small';
+    else if (diffLine < 10000) return 'Medium';
+    return 'Large';
+  }, [diffLine]);
+
+  return {
+    cmd,
+    branchOptions,
+    fetchRepoAccess,
+    fetchingRepoInfo,
+    getRepoInfo,
+    cdFields,
+    setCDFields,
+    template,
+    run,
+    diffSize,
+    diffLine,
+    filename,
+  };
 }
 
 export const CodeDiffContext = createContext<{
   template: string;
-  cmd: string[];
+  cmd: string;
   branchOptions: {
     value: string;
     label: string;
@@ -77,4 +107,7 @@ export const CodeDiffContext = createContext<{
   setCDFields: (value?: PartialCodeDiffFields | IFuncUpdater<PartialCodeDiffFields> | undefined) => void;
   cdFields: PartialCodeDiffFields;
   run: () => Promise<any>;
+  filename: string;
+  diffSize: string;
+  diffLine: number;
 }>({} as any);

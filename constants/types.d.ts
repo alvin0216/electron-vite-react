@@ -5,6 +5,9 @@ declare namespace IPCPayload {
     indentation: '2' | '4';
     sort: boolean;
   }
+  export interface CodeDiff extends CodeDiffFields {
+    filename: string;
+  }
 }
 
 declare interface RepoInfo {
