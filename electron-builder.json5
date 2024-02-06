@@ -20,7 +20,7 @@
         arch: ['x64'],
       },
     ],
-    artifactName: '${productName}-${version}.${ext}',
+    artifactName: '${productName}-v${version}.${ext}',
     icon: 'public/logo.png',
     requestedExecutionLevel: 'requireAdministrator',
   },
@@ -29,10 +29,5 @@
     perMachine: false,
     allowToChangeInstallationDirectory: true,
     deleteAppDataOnUninstall: false,
-  },
-  publish: {
-    provider: 'generic',
-    channel: 'latest',
-    url: 'https://github.com/electron-vite/electron-vite-react/releases/download/v0.9.9/',
-  },
+  }
 }

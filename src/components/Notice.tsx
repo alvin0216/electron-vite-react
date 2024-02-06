@@ -10,10 +10,10 @@ interface NoticeProps {}
 
 const Notice: React.FC<NoticeProps> = (props) => {
   const { send } = useIpc();
-  const { data } = useRequest(
+  const { data, error } = useRequest(
     () => axios.get(`${resourcePath.releaseJson}?v=${Date.now()}`) as Promise<{ data: ReleaseInfo }>,
     {
-      // 2 hours 
+      // 2 hours
       pollingInterval: 7200000,
     }
   );
@@ -23,7 +23,7 @@ const Notice: React.FC<NoticeProps> = (props) => {
 
   const isLastest = lastestVersion && lastestVersion === APP_VERSION;
 
-  if (isLastest) return null;
+  if (isLastest || error) return null;
 
   // return null;
   return (
