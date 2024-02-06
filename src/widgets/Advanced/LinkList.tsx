@@ -1,5 +1,6 @@
+import { useCloudConfig } from '@/hooks/useCloudConfig';
 import { useIpc } from '@/hooks/useIpc';
-import { FolderOpenOutlined, IeOutlined } from '@ant-design/icons';
+import { CloudDownloadOutlined, FolderOpenOutlined, IeOutlined } from '@ant-design/icons';
 import { IPCEnum, OpenTypeEnum } from '@constants/enum';
 import { resourcePath } from '@constants/resource';
 import { Button, Space } from 'antd';
@@ -8,8 +9,14 @@ interface ListProps {}
 
 const LinkList: React.FC<ListProps> = () => {
   const { send } = useIpc();
+  const { downloadUrl } = useCloudConfig();
 
   const list = [
+    {
+      text: 'Download Url',
+      link: downloadUrl,
+      icon: <CloudDownloadOutlined />,
+    },
     {
       text: 'DevTools WebSite',
       link: resourcePath.devToolsWebSite,
@@ -39,19 +46,22 @@ const LinkList: React.FC<ListProps> = () => {
 
   return (
     <div>
-      {list.map((item, index) => (
-        <div key={index}>
-          <Button
-            className='pl-0'
-            icon={item.icon}
-            type='link'
-            onClick={() => {
-              send(IPCEnum.Open, { type: OpenTypeEnum.Url, link: item.link });
-            }}>
-            {item.text}
-          </Button>
-        </div>
-      ))}
+      {list.map(({ icon, text, link }, index) => {
+        if (!link) return null;
+        return (
+          <div key={index}>
+            <Button
+              className='pl-0'
+              icon={icon}
+              type='link'
+              onClick={() => {
+                send(IPCEnum.Open, { type: OpenTypeEnum.Url, link });
+              }}>
+              {text}
+            </Button>
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -13,7 +13,6 @@ const Announcement: React.FC<AnnouncementProps> = () => {
           <Tooltip title='Author Alvin'>
             <Avatar src={avatar} />
           </Tooltip>
-
           <Button href='mailto:guosw5@lenovo.com?subject=Vantage Dev Tools Suggestions' type='link'>
             guosw5@lenovo.com
           </Button>

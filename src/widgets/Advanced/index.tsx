@@ -25,9 +25,7 @@ const Advanced: React.FC<AdvancedProps> = (props) => {
           </Space>
         </Card>
 
-        <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='User Profile' className='w-600'>
-          <UserProfile />
-        </Card>
+        <UserProfile />
       </Space>
     </div>
   );

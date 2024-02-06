@@ -1,9 +1,9 @@
 import { useIpc } from '@/hooks/useIpc';
-import { ExportOutlined, ImportOutlined } from '@ant-design/icons';
+import { CloudSyncOutlined, ExportOutlined, ImportOutlined } from '@ant-design/icons';
 import { IPCEnum } from '@constants/enum';
 import { StorgeEnum } from '@constants/storage';
 import { useRequest } from 'ahooks';
-import { Button, Space, message } from 'antd';
+import { Button, Card, Space, message } from 'antd';
 interface UserProfileProps {}
 
 const UserProfile: React.FC<UserProfileProps> = () => {
@@ -55,10 +55,10 @@ const UserProfile: React.FC<UserProfileProps> = () => {
   );
 
   return (
-    <>
+    <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='DevTools User Profile' className='w-600'>
       <div className='c-gray mb-24'>Mainly used to quickly migrate your usage data</div>
 
-      <Space>
+      <Space wrap>
         <Button icon={<ExportOutlined />} loading={exporting} onClick={onExport}>
           Export
         </Button>
@@ -66,7 +66,7 @@ const UserProfile: React.FC<UserProfileProps> = () => {
           Import
         </Button>
       </Space>
-    </>
+    </Card>
   );
 };
 export default UserProfile;

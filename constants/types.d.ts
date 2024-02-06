@@ -31,7 +31,7 @@ declare interface CodeDiffFields {
 
 declare type PartialCodeDiffFields = Partial<CodeDiffFields>;
 
-declare interface ReleaseInfo {
+declare interface CloudConfig {
   version: string;
   downloadUrl: string;
 }

@@ -14,5 +14,5 @@ export const resourcePath = {
   // ...........
   releaseHelper: 'https://confluence.tc.lenovo.com/display/CT/Build%2C+Deploy%2C+SSRB+and+Release',
 
-  releaseJson: 'https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/devToolsRelease.json',
+  cloudConfig: 'https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/devToolsConfig.json',
 };

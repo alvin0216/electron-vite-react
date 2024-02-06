@@ -1,5 +1,5 @@
 {
-  "name": "electron-vite-react",
+  "name": "vantage-dev-tools",
   "version": "2.2.1",
   "main": "dist-electron/main/index.js",
   "description": "Electron Vite React boilerplate.",

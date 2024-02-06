@@ -1,31 +1,17 @@
+import { useCloudConfig } from '@/hooks/useCloudConfig';
 import { useIpc } from '@/hooks/useIpc';
 import { NotificationOutlined } from '@ant-design/icons';
 import { IPCEnum, OpenTypeEnum } from '@constants/enum';
-import { resourcePath } from '@constants/resource';
-import { useRequest } from 'ahooks';
 import { Alert, Button } from 'antd';
-import axios from 'axios';
 
 interface NoticeProps {}
 
 const Notice: React.FC<NoticeProps> = (props) => {
   const { send } = useIpc();
-  const { data, error } = useRequest(
-    () => axios.get(`${resourcePath.releaseJson}?v=${Date.now()}`) as Promise<{ data: ReleaseInfo }>,
-    {
-      // 2 hours
-      pollingInterval: 7200000,
-    }
-  );
-
-  const lastestVersion = data?.data.version;
-  const downloadUrl = data?.data.downloadUrl;
-
-  const isLastest = lastestVersion && lastestVersion === APP_VERSION;
-
-  if (isLastest || error) return null;
+  const { isLastest, downloadUrl, lastestVersion } = useCloudConfig();
 
   // return null;
+  if (isLastest) return null;
   return (
     <div className='px-24 my-16'>
       <Alert
