@@ -8,15 +8,16 @@ import { Button, Space, Typography } from 'antd';
 const DiffResult: React.FC = (props) => {
   const { send } = useIpc();
 
-  const { diffLine, diffSize, filename, cdFields } = useCodediffCtx();
+  const { diffLine, diffSize, packagediffText, filename, cdFields } = useCodediffCtx();
 
   const hasResult = diffLine > 0;
 
   const open = () => send(IPCEnum.Open, { type: OpenTypeEnum.File, link: cdFields.repoPath + '\\' + filename });
 
+  const dataSource = hasResult ? { diffLine, diffSize, packagediffText } : undefined;
   return (
     <ProDescriptions
-      dataSource={hasResult ? { diffLine, diffSize } : undefined}
+      dataSource={dataSource}
       column={1}
       columns={[
         {
@@ -34,17 +35,17 @@ const DiffResult: React.FC = (props) => {
             !hasResult ? (
               '-'
             ) : (
-              <Space className='relative translate-y--4'>
+              <Space className='relative translate-y--6'>
                 <Button className='p-0' type='link' onClick={open}>
                   {filename}
                 </Button>
-                <Copy text={filename} />
+                <Copy text={filename} tooltips='copy file name' />
               </Space>
             ),
         },
         {
           title: 'package.json diff',
-          dataIndex: 'Package',
+          dataIndex: 'packagediffText',
           valueType: 'jsonCode',
         },
       ]}

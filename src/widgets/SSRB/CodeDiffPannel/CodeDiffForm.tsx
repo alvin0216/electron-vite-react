@@ -1,36 +1,55 @@
 import { FileSelector, FolderSelector } from '@/components/FileFolderSelector';
 import { useCodediffCtx } from '@/hooks/useCodediffCtx';
 import { ProForm, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { Button } from 'antd';
+import { Button, Space, Tag } from 'antd';
 import { useRef } from 'react';
 
 const CodeDiffForm: React.FC = () => {
   const formRef = useRef<ProFormInstance>();
-  const { branchOptions, cdFields, setCDFields, getRepoInfo, fetchRepoAccess, fetchingRepoInfo, run } =
-    useCodediffCtx();
+  const {
+    repoInfo,
+    cdFields,
+    setCDFields,
+    getRepoInfo,
+    fetchRepoAccess,
+    fetchingRepoInfo,
+    run,
+    cdFieldsDefaultValues,
+    reset,
+  } = useCodediffCtx();
 
-  const onValuesChange = (val: any, allValues: Partial<CodeDiffFields>) => {
-    setCDFields((prev) => ({ ...prev, ...allValues }));
+  const onValuesChange = (val: PartialCodeDiffFields, allValues: PartialCodeDiffFields) => {
+    let m = {} as any;
+    if (val.prevBranch) {
+      m.prevVersion = repoInfo?.branches.find((b) => b.name === val.prevBranch)?.version;
+    }
+    if (val.nextBranch) {
+      m.nextVersion = repoInfo?.branches.find((b) => b.name === val.nextBranch)?.version;
+    }
+    // @ts-ignore
+    setCDFields((prev) => ({ ...prev, ...allValues, ...m }));
   };
 
+  const branchOptions = repoInfo?.branches.map?.((b) => ({
+    value: b.name,
+    label: (
+      <Space>
+        <Tag color='cyan'>{b.name}</Tag>
+        <span>v{b.version}</span>
+      </Space>
+    ),
+  }));
+
   return (
-    <ProForm
+    <ProForm<CodeDiffFields>
       initialValues={cdFields}
       layout='horizontal'
       formRef={formRef}
       onValuesChange={onValuesChange}
       onFinish={run}
       onReset={() => {
-        formRef.current?.setFieldsValue({
-          repoPath: undefined,
-          packageJsonPath: undefined,
-          prevBranch: undefined,
-          nextBranch: undefined,
-          prevVersion: undefined,
-          nextVersion: undefined,
-          excludePattern: '!package-lock.json',
-          repoName: undefined,
-        });
+        formRef.current?.setFieldsValue(cdFieldsDefaultValues);
+        reset();
       }}
       submitter={{
         render: (props, [reset, submit]) => {

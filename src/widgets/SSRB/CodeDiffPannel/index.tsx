@@ -8,7 +8,7 @@ interface CodeDiffProps {}
 
 const CodeDiff: React.FC<CodeDiffProps> = () => {
   const ctx = useInitialCodeDiffCtx();
-  const hasResult = ctx.diffLine > 0;
+  const hasResult = ctx.cdFields?.repoPath && ctx.diffLine > 0;
 
   const list = hasResult
     ? [

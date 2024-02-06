@@ -8,6 +8,10 @@ declare namespace IPCPayload {
   export interface CodeDiff extends CodeDiffFields {
     filename: string;
   }
+  export interface RepoInfo extends CodeDiffFields {
+    repoPath: string;
+    packageJsonPath: string;
+  }
 }
 
 declare interface RepoInfo {

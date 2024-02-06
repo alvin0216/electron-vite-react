@@ -15,14 +15,15 @@ export function useService(action: ServiceAction) {
   const { invoke } = useIpc();
 
   const run = () => {
-    setStore({ service: { ...service, status: action } });
+    setStore({ service: { bootingDot: false, status: action } });
+
     invoke(IPCEnum.ServiceBin, action)
       .then(() => {
         message.success(successMap[action]);
         setStore({ service: { bootingDot: false, status: 'default' } });
       })
       .catch(() => {
-        setStore({ service: { ...service, status: 'default' } });
+        setStore({ service: { bootingDot: false, status: 'default' } });
       });
   };
 

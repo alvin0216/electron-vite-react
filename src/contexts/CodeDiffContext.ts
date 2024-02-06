@@ -12,7 +12,7 @@ export const cdFieldsDefaultValues: PartialCodeDiffFields = {
   nextBranch: undefined,
   prevVersion: undefined,
   nextVersion: undefined,
-  excludePattern: '!package-lock.json',
+  excludePattern: ':!package-lock.json',
   repoName: undefined,
 };
 
@@ -26,19 +26,21 @@ export function useInitialCodeDiffCtx() {
     defaultValue: cdFieldsDefaultValues,
   });
 
+  const fetchRepoAccess = !!(cdFields?.repoPath && cdFields?.packageJsonPath);
+
   const {
     run: getRepoInfo,
     loading: fetchingRepoInfo,
     data: repoInfo,
   } = useRequest(
     async () => {
-      return invoke(IPCEnum.GetRepoInfo, cdFields?.repoPath) as Promise<RepoInfo>;
+      return invoke(IPCEnum.GetRepoInfo, {
+        repoPath: cdFields?.repoPath,
+        packageJsonPath: cdFields?.packageJsonPath,
+      }) as Promise<RepoInfo>;
     },
     { manual: true }
   );
-
-  const branchOptions = repoInfo?.branches.map?.((b) => ({ value: b.name, label: `${b.name} (${b.version})` }));
-  const fetchRepoAccess = !!(cdFields?.repoPath && cdFields?.packageJsonPath);
 
   const { cmd, filename } = useMemo(() => {
     const prevVersion =
@@ -78,9 +80,15 @@ export function useInitialCodeDiffCtx() {
     return 'Large';
   }, [diffLine]);
 
+  const reset = () => {
+    setCDFields(cdFieldsDefaultValues);
+    setState({ diffLine: 0, packagediffText: undefined });
+  };
+
   return {
+    reset,
     cmd,
-    branchOptions,
+    repoInfo,
     fetchRepoAccess,
     fetchingRepoInfo,
     getRepoInfo,
@@ -92,16 +100,15 @@ export function useInitialCodeDiffCtx() {
     diffLine,
     filename,
     packagediffText,
+    cdFieldsDefaultValues,
   };
 }
 
 export const CodeDiffContext = createContext<{
+  repoInfo?: RepoInfo;
+  cdFieldsDefaultValues: PartialCodeDiffFields;
   template: string;
   cmd: string;
-  branchOptions: {
-    value: string;
-    label: string;
-  }[];
   fetchRepoAccess: boolean;
   fetchingRepoInfo: boolean;
   getRepoInfo: () => void;
@@ -112,4 +119,5 @@ export const CodeDiffContext = createContext<{
   diffSize: string;
   diffLine: number;
   packagediffText: string;
+  reset: () => void;
 }>({} as any);

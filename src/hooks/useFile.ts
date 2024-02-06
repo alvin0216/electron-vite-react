@@ -26,6 +26,14 @@ export function useFile(fileKey: FileKeyEnum) {
         })
       );
     } else {
+      if ([FileKeyEnum.Hypothesis, FileKeyEnum.SMBInfo].includes(fileKey)) {
+        setState(
+          produce(state, (draft) => {
+            draft.service.bootingDot = true;
+          })
+        );
+      }
+
       send(IPCEnum.UpdateFile, { key: fileKey, json: newJson });
     }
   };

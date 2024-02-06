@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Divider, Form, Input, Typography } from 'antd';
+import { Divider, Form, Input, Tooltip, Typography } from 'antd';
 import { useCodediffCtx } from '@/hooks/useCodediffCtx';
-import { ProDescriptions } from '@ant-design/pro-components';
 import Copy from '@/components/Copy';
 
 const { Paragraph } = Typography;
@@ -12,7 +11,7 @@ const Terminal: React.FC<TerminalProps> = (props) => {
   const { template, cmd, cdFields } = useCodediffCtx();
   const cd = `cd ${cdFields.repoPath || '[repoPath]'}`;
 
-  const fullCmd = `${cd} && ${cmd}`;
+  const fullCmd = `${cd} ; ${cmd}`;
   return (
     <div className='pr-24'>
       <div className='mb-4'>Template</div>
@@ -29,7 +28,7 @@ const Terminal: React.FC<TerminalProps> = (props) => {
         <div className='mb-6'>cd {cdFields.repoPath || '[repoPath]'}</div>
         <div className='flex items-center'>
           <div className='pr-6'>{cmd}</div>
-          <Copy text={fullCmd} />
+          <Copy text={fullCmd} tooltips="copy to powershell" />
         </div>
       </div>
     </div>
