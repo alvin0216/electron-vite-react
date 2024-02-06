@@ -1,4 +1,4 @@
-import { StoreContext } from '@/contexts/storeContext';
+import { StoreContext } from '@/contexts/StoreContext';
 import { useContext } from 'react';
 
 export function useStore() {

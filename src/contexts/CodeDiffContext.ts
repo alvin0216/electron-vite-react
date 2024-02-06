@@ -3,7 +3,6 @@ import { useLocalStorageState, useRequest, useSetState } from 'ahooks';
 import { StorgeEnum } from '@constants/storage';
 import { IPCEnum } from '@constants/enum';
 import { useIpc } from '@/hooks/useIpc';
-import type { IFuncUpdater } from 'ahooks/lib/createUseStorageState';
 
 export const cdFieldsDefaultValues: PartialCodeDiffFields = {
   repoPath: undefined,
@@ -112,7 +111,7 @@ export const CodeDiffContext = createContext<{
   fetchRepoAccess: boolean;
   fetchingRepoInfo: boolean;
   getRepoInfo: () => void;
-  setCDFields: (value?: PartialCodeDiffFields | IFuncUpdater<PartialCodeDiffFields> | undefined) => void;
+  setCDFields: (value?: PartialCodeDiffFields | any) => void;
   cdFields: PartialCodeDiffFields;
   run: () => Promise<any>;
   filename: string;

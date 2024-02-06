@@ -1,7 +1,6 @@
 import { createContext } from 'react';
 import { useLocalStorageState } from 'ahooks';
 import { StorgeEnum } from '@constants/storage';
-import type { IFuncUpdater } from 'ahooks/lib/createUseStorageState';
 
 export function useInitialSMBCache() {
   const [snList, setSnList] = useLocalStorageState<SNItem[]>(StorgeEnum.SnList, { defaultValue: [] });
@@ -22,8 +21,8 @@ export const SMBCacheContext = createContext<{
   snList: SNItem[];
   mtmList: MtmItem[];
   filters: string[];
-  setSnList: (value?: SNItem[] | IFuncUpdater<SNItem[]> | undefined) => void;
-  setMtmList: (value?: MtmItem[] | IFuncUpdater<SNItem[]> | undefined) => void;
+  setSnList: (value?: SNItem[] | any) => void;
+  setMtmList: (value?: MtmItem[] | any) => void;
   setFilters: (value: string[]) => void;
 }>({
   snList: [],

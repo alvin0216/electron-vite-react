@@ -1,5 +1,5 @@
 import logo from './assets/logo.png';
-import { StoreContext, useInitialStore } from '@/contexts/storeContext';
+import { StoreContext, useInitialStore } from '@/contexts/StoreContext';
 import Widgets from './widgets';
 import Notice from './components/Notice';
 
