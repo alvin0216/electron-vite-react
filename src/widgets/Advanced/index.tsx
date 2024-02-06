@@ -1,6 +1,5 @@
 import VantageBin from '@/components/VantageBin';
-import { MailOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button, Card, List, Space } from 'antd';
+import { Badge, Button, Card, Space } from 'antd';
 import LinkList from './LinkList';
 
 interface AdvancedProps {}
@@ -29,8 +28,8 @@ const Advanced: React.FC<AdvancedProps> = (props) => {
 
         <Card hoverable headStyle={{ background: 'rgba(0, 0, 0, 0.02)' }} title='Announcement' className='w-600'>
           <Space>
-            <VantageBin action='start' />
             <VantageBin action='stop' />
+            <VantageBin action='start' />
             <VantageBin action='reboot' />
           </Space>
         </Card>

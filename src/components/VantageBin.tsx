@@ -11,7 +11,7 @@ const VantageBin: React.FC<IProps> = ({ action }) => {
   return (
     <Badge dot={dot}>
       <Button
-        type={action === 'start' ? 'default' : 'primary'}
+        type={action !== 'stop' ? 'primary' : 'default'}
         loading={running}
         onClick={run}
         className='capitalize'

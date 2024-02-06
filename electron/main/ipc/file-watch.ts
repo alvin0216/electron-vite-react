@@ -1,8 +1,16 @@
-import { fileWatchMap } from '@constants/resource';
+import { resourcePath } from '@constants/resource';
 import chokidar from 'chokidar';
 import { BrowserWindow, ipcMain, shell } from 'electron';
 import { existsSync, isFileWritable, readJson, setFileReadOnly, setFileWritable, updateJson } from '../utils/fs-helper';
 import { FileKeyEnum, FileStatus, IPCEnum } from '@constants/enum';
+import { convertLink } from '../utils/convertLink';
+
+const fileWatchMap = new Map([
+  [FileKeyEnum.ConfigJson, convertLink(resourcePath.configJson)],
+  [FileKeyEnum.BetaConfigJson, convertLink(resourcePath.betaConfigJson)],
+  [FileKeyEnum.SMBInfo, convertLink(resourcePath.smbInfo)],
+  [FileKeyEnum.Hypothesis, convertLink(resourcePath.hypothesis)],
+]);
 
 export function ipcWatchFiles(win: BrowserWindow) {
   ipcMain
