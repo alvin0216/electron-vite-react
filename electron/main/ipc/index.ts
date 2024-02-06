@@ -1,5 +1,5 @@
-import { IPCEnum } from '@constants/enum';
-import { BrowserWindow, dialog, ipcMain } from 'electron';
+import { IPCEnum, OpenTypeEnum } from '@constants/enum';
+import { BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import { ipcWatchFiles } from './file-watch';
 import { ipcTranslation } from './translation';
 import { ipcRegistry } from './registry';
@@ -13,16 +13,23 @@ export function ipcHandler(win: BrowserWindow) {
   ipcSSRB();
   ipcTranslation(win);
 
-  ipcMain.on(IPCEnum.OpenDevTools, () => win.webContents.openDevTools());
+  ipcMain
+    .on(IPCEnum.OpenDevTools, () => win.webContents.openDevTools())
+    .on(IPCEnum.Open, (arg, { type, link }) => {
+      switch (type) {
+        case OpenTypeEnum.File:
+          shell.openPath(link);
+          break;
 
-  ipcMain.handle(IPCEnum.OpenDirectory, async () => {
-    const { canceled, filePaths } = await dialog.showOpenDialog({
-      properties: ['openDirectory'],
+        case OpenTypeEnum.Folder:
+          shell.openPath(link);
+          break;
+
+        case OpenTypeEnum.Url:
+          shell.openExternal(link);
+          break;
+        default:
+          break;
+      }
     });
-    if (canceled) {
-      return;
-    } else {
-      return filePaths[0];
-    }
-  });
 }

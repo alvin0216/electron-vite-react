@@ -9,6 +9,7 @@ export enum IPCEnum {
   RunCodeDiff = 'RunCodeDiff',
   SelectFolder = 'SelectFolder',
   SelectPackageJson = 'SelectPackageJson',
+  Open = 'Open',
 
   // invoke
   ServiceBin = 'ServiceBin',
@@ -18,6 +19,12 @@ export enum IPCEnum {
   ReadPCSetting = 'ReadPCSetting',
   SetGaming = 'SetGaming',
   SetCountry = 'SetCountry',
+}
+
+export enum OpenTypeEnum {
+  File = 'file',
+  Folder = 'folder',
+  Url = 'url',
 }
 
 // ....

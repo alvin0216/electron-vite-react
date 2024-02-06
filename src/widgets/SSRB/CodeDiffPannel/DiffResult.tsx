@@ -1,12 +1,18 @@
 import Copy from '@/components/Copy';
 import { useCodediffCtx } from '@/hooks/useCodediffCtx';
+import { useIpc } from '@/hooks/useIpc';
 import { ProDescriptions } from '@ant-design/pro-components';
+import { IPCEnum, OpenTypeEnum } from '@constants/enum';
 import { Button, Space, Typography } from 'antd';
 
 const DiffResult: React.FC = (props) => {
-  const { diffLine, diffSize, filename } = useCodediffCtx();
+  const { send } = useIpc();
+
+  const { diffLine, diffSize, filename, cdFields } = useCodediffCtx();
 
   const hasResult = diffLine > 0;
+
+  const open = () => send(IPCEnum.Open, { type: OpenTypeEnum.File, link: cdFields.repoPath + '\\' + filename });
 
   return (
     <ProDescriptions
@@ -29,7 +35,7 @@ const DiffResult: React.FC = (props) => {
               '-'
             ) : (
               <Space className='relative translate-y--4'>
-                <Button className='p-0' type='link'>
+                <Button className='p-0' type='link' onClick={open}>
                   {filename}
                 </Button>
                 <Copy text={filename} />
