@@ -50,3 +50,10 @@ export async function selectPackageJson() {
   return canceled ? undefined : filePaths[0];
 }
 
+export async function selectUserJson() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    filters: [{ name: 'vantage-dev-tools-user-profile.json', extensions: ['json'] }],
+    properties: ['openFile'],
+  });
+  return canceled ? undefined : filePaths[0];
+}

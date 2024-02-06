@@ -10,6 +10,8 @@ export enum IPCEnum {
   SelectFolder = 'SelectFolder',
   SelectPackageJson = 'SelectPackageJson',
   Open = 'Open',
+  ExportUserProfile = 'ExportUserProfile',
+  ImportUserProfile = 'ImportUserProfile',
 
   // invoke
   ServiceBin = 'ServiceBin',
