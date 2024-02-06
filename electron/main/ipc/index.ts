@@ -5,6 +5,7 @@ import { ipcTranslation } from './translation';
 import { ipcRegistry } from './registry';
 import { ipcExec } from './exec';
 import { ipcSSRB } from './ssrb';
+import { exec } from 'child_process';
 
 export function ipcHandler(win: BrowserWindow) {
   ipcWatchFiles(win);
@@ -16,13 +17,19 @@ export function ipcHandler(win: BrowserWindow) {
   ipcMain
     .on(IPCEnum.OpenDevTools, () => win.webContents.openDevTools())
     .on(IPCEnum.Open, (arg, { type, link }) => {
+
+
+
+      
       switch (type) {
         case OpenTypeEnum.File:
           shell.openPath(link);
           break;
 
         case OpenTypeEnum.Folder:
-          shell.openPath(link);
+          // match keys first && open
+          // shell.openPath(link);
+          exec(`explorer ${link}`);
           break;
 
         case OpenTypeEnum.Url:

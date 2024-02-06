@@ -1,6 +1,7 @@
 import VantageBin from '@/components/VantageBin';
 import { MailOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button, Card, Space } from 'antd';
+import { Avatar, Badge, Button, Card, List, Space } from 'antd';
+import LinkList from './LinkList';
 
 interface AdvancedProps {}
 
@@ -22,6 +23,7 @@ const Advanced: React.FC<AdvancedProps> = (props) => {
                 guosw5@lenovo.com
               </Button>
             </div>
+            <LinkList />
           </Card>
         </Badge.Ribbon>
 

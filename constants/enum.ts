@@ -66,3 +66,9 @@ export enum SerivceBinAction {
   Stop = 'stop',
   Reboot = 'reboot',
 }
+
+export enum FolderKeyEnum {
+  Metrics = 'metrics',
+  Logs = 'logs',
+  ShellDownload = 'shellDownload',
+}
