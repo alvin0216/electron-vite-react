@@ -8,6 +8,7 @@
     output: 'release/${version}',
   },
   files: ['dist-electron', 'dist'],
+  productName: 'Vantage Dev Tools',
   mac: {
     artifactName: '${productName}_${version}.${ext}',
     target: ['dmg', 'zip'],
@@ -19,7 +20,7 @@
         arch: ['x64'],
       },
     ],
-    artifactName: '${productName}-Windows-${version}-Setup.${ext}',
+    artifactName: '${productName}-${version}.${ext}',
     icon: 'public/logo.png',
     requestedExecutionLevel: 'requireAdministrator',
   },

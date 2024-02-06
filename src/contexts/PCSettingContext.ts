@@ -25,7 +25,14 @@ export function useInitialPCSetting() {
   const { loading, run } = useRequest(async (action = IPCEnum.ReadPCSetting, data?: any) => {
     switch (action) {
       case IPCEnum.ReadPCSetting:
-        return invoke(IPCEnum.ReadPCSetting).then(setState);
+        return invoke(IPCEnum.ReadPCSetting)
+          .then((res) => {
+            console.log(IPCEnum.ReadPCSetting, res);
+            setState(res);
+          })
+          .catch((e) => {
+            console.log('error', IPCEnum.ReadPCSetting, e);
+          });
 
       case IPCEnum.SetGaming:
         return invoke(IPCEnum.SetGaming, data).then(() => setState({ pcType: data }));
