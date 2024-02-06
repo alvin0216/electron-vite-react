@@ -8,6 +8,18 @@ interface CodeDiffProps {}
 
 const CodeDiff: React.FC<CodeDiffProps> = () => {
   const ctx = useInitialCodeDiffCtx();
+  const hasResult = ctx.diffLine > 0;
+
+  const list = hasResult
+    ? [
+        {
+          key: 'Result',
+          label: 'Result',
+          children: <DiffResult />,
+        },
+      ]
+    : [];
+
   return (
     <CodeDiffContext.Provider value={ctx as any}>
       <Descriptions
@@ -31,11 +43,7 @@ const CodeDiff: React.FC<CodeDiffProps> = () => {
             children: <Terminal />,
             span: 1,
           },
-          {
-            key: 'Result',
-            label: 'Result',
-            children: <DiffResult />,
-          },
+          ...list,
         ]}
       />
     </CodeDiffContext.Provider>

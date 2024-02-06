@@ -35,7 +35,17 @@ async function getRepoInfo(packageJsonPath: string) {
 // ...
 
 async function runCodeDiff(cdFields: IPCPayload.CodeDiff) {
-  const { repoPath, repoName, filename, prevBranch, nextBranch, prevVersion, nextVersion, excludePattern } = cdFields;
+  const {
+    repoPath,
+    packageJsonPath,
+    repoName,
+    filename,
+    prevBranch,
+    nextBranch,
+    prevVersion,
+    nextVersion,
+    excludePattern,
+  } = cdFields;
 
   const fileName = filename || `${repoName}-v${prevVersion}-${nextVersion}.diff`;
 
@@ -48,5 +58,9 @@ async function runCodeDiff(cdFields: IPCPayload.CodeDiff) {
   const diffLine = diffText.split('\n').length;
   fse.writeFileSync(fileName, diffText);
 
-  return { diffLine };
+  const packageRelative = packageJsonPath.replace(repoPath, '');
+
+  const packagediffText = await git.diff([nextBranch, prevBranch, '--', packageRelative]);
+
+  return { diffLine, packagediffText };
 }

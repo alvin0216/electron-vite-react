@@ -21,7 +21,7 @@ export function useInitialCodeDiffCtx() {
   const template =
     'git diff [prevBranch] [nextBranch] -- [excludePattern] > [repoName]-v[prevVersion]-v[nextVersion].diff';
 
-  const [{ diffLine }, setState] = useSetState({ diffLine: 0 });
+  const [{ diffLine, packagediffText }, setState] = useSetState({ diffLine: 0, packagediffText: undefined });
   const [cdFields, setCDFields] = useLocalStorageState<PartialCodeDiffFields>(StorgeEnum.CodeDiffFields, {
     defaultValue: cdFieldsDefaultValues,
   });
@@ -61,8 +61,8 @@ export function useInitialCodeDiffCtx() {
   }, [repoInfo, cdFields]);
 
   const run = async () => {
-    const { diffLine } = await invoke(IPCEnum.RunCodeDiff, { ...cdFields, filename });
-    setState({ diffLine });
+    const { diffLine, packagediffText } = await invoke(IPCEnum.RunCodeDiff, { ...cdFields, filename });
+    setState({ diffLine, packagediffText });
     return true;
   };
 
@@ -91,6 +91,7 @@ export function useInitialCodeDiffCtx() {
     diffSize,
     diffLine,
     filename,
+    packagediffText,
   };
 }
 
@@ -110,4 +111,5 @@ export const CodeDiffContext = createContext<{
   filename: string;
   diffSize: string;
   diffLine: number;
+  packagediffText: string;
 }>({} as any);
