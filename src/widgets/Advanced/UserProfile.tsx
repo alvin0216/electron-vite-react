@@ -35,7 +35,9 @@ const UserProfile: React.FC<UserProfileProps> = () => {
       const cacheJson = cacheKeys.reduce((m, key) => {
         try {
           // @ts-ignore
-          m[key] = JSON.parse(localStorage.getItem(key));
+          const v = JSON.parse(localStorage.getItem(key));
+          // @ts-ignore
+          if (v) m[key] = v;
         } catch (e) {
           return m;
         }

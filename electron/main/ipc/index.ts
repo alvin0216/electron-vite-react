@@ -5,8 +5,8 @@ import { ipcTranslation } from './translation';
 import { ipcRegistry } from './registry';
 import { ipcExec } from './exec';
 import { ipcSSRB } from './ssrb';
-import { exec } from 'child_process';
 import { convertLink } from '../utils/convertLink';
+import { ipcUserProfile } from './user-profile';
 
 export function ipcHandler(win: BrowserWindow) {
   ipcWatchFiles(win);
@@ -14,6 +14,7 @@ export function ipcHandler(win: BrowserWindow) {
   ipcExec();
   ipcSSRB();
   ipcTranslation(win);
+  ipcUserProfile();
 
   ipcMain
     .on(IPCEnum.OpenDevTools, () => win.webContents.openDevTools())
