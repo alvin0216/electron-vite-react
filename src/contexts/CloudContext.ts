@@ -16,7 +16,7 @@ export function useInitialCloudConfig() {
 
   const lastestVersion = data?.data.version;
   const downloadUrl = data?.data.downloadUrl;
-  const isLastest = !data || lastestVersion === APP_VERSION;
+  const isLastest = !data || isLatestVersion(lastestVersion!);
 
   return { lastestVersion, downloadUrl, isLastest, loading };
 }
@@ -30,3 +30,11 @@ export const CloudContext = createContext<{
   // @ts-ignore
   null
 );
+
+function convertToNumber(version: string) {
+  return Number(version.replace(/\D/g, ''));
+}
+
+function isLatestVersion(version: string) {
+  return convertToNumber(APP_VERSION) >= convertToNumber(version);
+}

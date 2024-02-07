@@ -1,8 +1,7 @@
 import crypto from 'crypto';
 import fse from 'fs-extra';
 import { dialog } from 'electron';
-import { homedir } from 'os';
-import { join } from 'path';
+
 /** 合并对象，target 对象会被修改 */
 export function MergeRecursive(source: any, target: any) {
   for (const p in source) {
@@ -50,13 +49,3 @@ export async function selectPackageJson() {
   });
   return canceled ? undefined : filePaths[0];
 }
-
-export async function selectUserJson() {
-  const { canceled, filePaths } = await dialog.showOpenDialog({
-    filters: [{ name: 'vantage-dev-tools-user-profile.json', extensions: ['json'] }],
-    properties: ['openFile'],
-  });
-  return canceled ? undefined : filePaths[0];
-}
-
-export const desktopPath = join(homedir(), 'Desktop');

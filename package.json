@@ -1,9 +1,9 @@
 {
   "name": "vantage-dev-tools",
-  "version": "2.2.1",
+  "version": "2.0.0",
   "main": "dist-electron/main/index.js",
-  "description": "Electron Vite React boilerplate.",
-  "author": "草鞋没号 <308487730@qq.com>",
+  "description": "Vantage Dev Tools",
+  "author": "Alvin <guosw5@lenovo.com>",
   "license": "MIT",
   "private": true,
   "debug": {

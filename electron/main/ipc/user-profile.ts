@@ -1,15 +1,20 @@
 import fse from 'fs-extra';
 import { IPCEnum } from '@constants/enum';
 import { ipcMain, shell } from 'electron';
-import { desktopPath, selectUserJson } from '../utils';
+import { dialog } from 'electron';
+import { homedir } from 'os';
+import { resolve } from 'path';
+
+const desktopPath = resolve(homedir(), 'Desktop');
+const userProfilePath = resolve(desktopPath, 'vantage-dev-tools-user-profile.json');
+
+console.log(123, desktopPath, userProfilePath);
 
 export function ipcUserProfile() {
   ipcMain.handle(IPCEnum.ExportUserProfile, (args, json) => {
-    // ...
-    const filePath = `${desktopPath}/vantage-dev-tools-user-profile.json`;
-    fse.writeJSONSync(filePath, json);
+    fse.writeJSONSync(userProfilePath, json);
 
-    shell.showItemInFolder(filePath);
+    shell.showItemInFolder(userProfilePath);
     return true;
   });
 
@@ -20,4 +25,14 @@ export function ipcUserProfile() {
     }
     return false;
   });
+}
+
+async function selectUserJson() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    filters: [{ name: 'vantage-dev-tools-user-profile.json', extensions: ['json'] }],
+    properties: ['openFile'],
+    defaultPath: desktopPath,
+    buttonLabel: 'Select file',
+  });
+  return canceled ? undefined : filePaths[0];
 }
